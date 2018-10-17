@@ -50,13 +50,26 @@
   <ItemGroup>
     <Compile Include="DataContext\SelfContext.cs" />
     <Compile Include="Domain\BaseEntity.cs" />
+    <Compile Include="Domain\Notification.cs" />
+    <Compile Include="Domain\Role.cs" />
+    <Compile Include="Domain\User.cs" />
     <Compile Include="Domain\Word.cs" />
     <Compile Include="Domain\Sentence.cs" />
+    <Compile Include="Migrations\201810172213415_AddedFirstTables.cs" />
+    <Compile Include="Migrations\201810172213415_AddedFirstTables.Designer.cs">
+      <DependentUpon>201810172213415_AddedFirstTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201810172213415_AddedFirstTables.resx">
+      <DependentUpon>201810172213415_AddedFirstTables.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace Self.Data.Domain
 {
-    [Table("Sentemce")]
-    public class Sentence
+    [Table("Sentence")]
+    public class Sentence : BaseEntity
     {
         [MaxLength(140,ErrorMessage = "Word character limit can' t exceed 140")]
         public string SentenceContent { get; set; }
