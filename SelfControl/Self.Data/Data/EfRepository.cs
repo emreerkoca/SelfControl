@@ -1,51 +1,81 @@
-﻿using Self.Core.Interfaces;
-using Self.Core.SharedKernel;
+﻿using Microsoft.EntityFrameworkCore;
+using Self.Core.Entities;
+using Self.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Self.Infrastructure.Data
 {
-    public class EfRepository : IRepository
+    public class EfRepository<T> : IRepository<T>, IAsyncRepository<T> where T : BaseEntity
     {
-        private readonly AppDbContext _dbContext;
+        protected readonly AppDbContext _appDbContext;
 
-        #region Ctor
-        public EfRepository(AppDbContext dbContext)
+        public EfRepository(AppDbContext appDbContext)
         {
-            _dbContext = dbContext;
+            _appDbContext = appDbContext;
         }
-        #endregion
 
-        public T Add<T>(T entity) where T : BaseEntity
+        public T Add(T entity)
         {
-            _dbContext.Set<T>().Add(entity);
-            _dbContext.SaveChanges();
+            _appDbContext.Set<T>().Add(entity);
+            _appDbContext.SaveChanges();
 
             return entity;
         }
 
-        public void Delete<T>(T entity) where T : BaseEntity
+        public async Task<T> AddAsync(T entity)
         {
-            _dbContext.Set<T>().Remove(entity);
-            _dbContext.SaveChanges();
+            _appDbContext.Set<T>().Add(entity);
+             await _appDbContext.SaveChangesAsync();
+
+            return  entity;
         }
 
-        public T GetById<T>(int id) where T : BaseEntity
+        public void Delete(T entity)
         {
-            return _dbContext.Set<T>().SingleOrDefault(e => e.Id == id); 
+            _appDbContext.Set<T>().Remove(entity);
+            _appDbContext.SaveChangesAsync();
         }
 
-        public List<T> List<T>() where T : BaseEntity
+        public async Task DeleteAsync(T entity)
         {
-            return _dbContext.Set<T>().ToList();
+            _appDbContext.Set<T>().Remove(entity);
+            await _appDbContext.SaveChangesAsync();
         }
 
-        public void Update<T>(T entity) where T : BaseEntity
+        public virtual T GetById(int id)
         {
-            _dbContext.Set<T>().Update(entity);
-            _dbContext.SaveChanges();
+            return _appDbContext.Set<T>().Find(id);
+        }
+
+        public virtual Task<T> GetByIdAsync(int id)
+        {
+            return _appDbContext.Set<T>().FindAsync(id);
+        }
+
+        public IEnumerable<T> GetList()
+        {
+            return _appDbContext.Set<T>().AsEnumerable();
+        }
+
+        public async Task<IReadOnlyList<T>> GetListAsync()
+        {
+            return await _appDbContext.Set<T>().ToListAsync();
+        }
+
+        public void Update(T entity)
+        {
+            _appDbContext.Entry(entity).State = EntityState.Modified;
+            _appDbContext.SaveChanges();
+        }
+
+        public async Task UpdateAsync(T entity)
+        {
+            _appDbContext.Entry(entity).State = EntityState.Modified;
+            await _appDbContext.SaveChangesAsync();
         }
     }
 }
