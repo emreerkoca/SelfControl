@@ -12,7 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Self.Infrastructure.Data;
 
-namespace Self.Admin
+namespace Self.Web
 {
     public class Startup
     {
@@ -26,9 +26,13 @@ namespace Self.Admin
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connection = @"Server=(localdb)\mssqllocaldb;Database=SelfControl;Trusted_Connection=True;ConnectRetryCount=0";
+            //Use real database
             services.AddDbContext<AppDbContext>
-                (options => options.UseSqlServer(connection));
+                (options => options.UseSqlServer(Configuration.GetConnectionString("SelfConnection")));
+
+            //TODO 05.02.2019 EmreE 
+            //Add IdentityDbContext (and add authentication)
+
 
             services.Configure<CookiePolicyOptions>(options =>
             {

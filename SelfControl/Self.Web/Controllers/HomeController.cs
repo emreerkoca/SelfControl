@@ -4,9 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Self.Admin.Models;
+using Self.Web.Models;
 
-namespace Self.Admin.Controllers
+namespace Self.Web.Controllers
 {
     public class HomeController : Controller
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace Self.Admin.Models
+namespace Self.Web.Models
 {
     public class ErrorViewModel
     {
