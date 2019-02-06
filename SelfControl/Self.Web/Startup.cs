@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Self.Core.Interfaces;
 using Self.Infrastructure.Data;
 
 namespace Self.Web
@@ -41,6 +42,7 @@ namespace Self.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddScoped<IWordRepository, WordRepository>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -54,7 +56,7 @@ namespace Self.Web
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Word/Error");
                 app.UseHsts();
             }
 
@@ -66,7 +68,7 @@ namespace Self.Web
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Word}/{action=Index}/{id?}");
             });
         }
     }

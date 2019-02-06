@@ -5,10 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Bootstrap" Version="4.2.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Self.Core\Self.Core.csproj" />
     <ProjectReference Include="..\Self.Infrastructure\Self.Infrastructure.csproj" />
   </ItemGroup>
 
