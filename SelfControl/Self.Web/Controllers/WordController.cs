@@ -60,5 +60,13 @@ namespace Self.Web.Controllers
 
             return View(wordList);
         }
+
+
+        public IActionResult JumpWord()
+        {
+            Word word = _wordRepository.GetRandomWord();
+
+            return PartialView("JumpWordPartial",word);
+        }
     }
 }

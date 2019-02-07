@@ -1,8 +1,11 @@
-﻿using Self.Core.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Self.Core.Entities;
 using Self.Core.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Self.Infrastructure.Data
 {
@@ -11,5 +14,16 @@ namespace Self.Infrastructure.Data
         public WordRepository(AppDbContext appDbContext) : base(appDbContext)
         {
         }
+
+        public Word GetRandomWord()
+        {
+            return _appDbContext.Word.OrderBy(r => Guid.NewGuid()).Skip(2).Take(1).First();
+        }
+
+        public Task<Word> GetRandomWordAsync()
+        {
+            return _appDbContext.Word.OrderBy(r => Guid.NewGuid()).Skip(2).Take(1).FirstAsync();
+        }
+
     }
 }
