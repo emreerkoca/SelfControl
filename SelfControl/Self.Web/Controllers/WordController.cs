@@ -10,6 +10,8 @@ using Self.Core.Interfaces;
 
 namespace Self.Web.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class WordController : Controller
     {
         #region Fields
