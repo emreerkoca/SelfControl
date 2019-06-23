@@ -44,12 +44,12 @@
 
 
 
-        var jumpWordPostBackURL = '/Word/JumpWord';
+        var getRandomWordPostBackURL = '/Word/GetRandomWord';
         $(function () {
             $(".jump-word").click(function () {
                 $.ajax({
                     type: "GET",
-                    url: jumpWordPostBackURL,
+                    url: getRandomWordPostBackURL,
                     contentType: "application/json; charset=utf-8",
                     success: function (data) {
 

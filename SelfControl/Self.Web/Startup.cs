@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Self.Core.Interfaces;
 using Self.Infrastructure.Data;
+using Self.Infrastructure.Identity;
 
 namespace Self.Web
 {
@@ -28,11 +29,13 @@ namespace Self.Web
         public void ConfigureServices(IServiceCollection services)
         {
             //Use real database
-            services.AddDbContext<AppDbContext>
-                (options => options.UseSqlServer(Configuration.GetConnectionString("SelfConnection")));
+            services.AddDbContext<AppDbContext> (options => 
+                options.UseSqlServer(Configuration.GetConnectionString("SelfConnection")));
 
-            //TODO 05.02.2019 EmreE 
-            //Add IdentityDbContext (and add authentication)
+            //Add Identity DbContext
+            services.AddDbContext<AppIdentityDbContext>(options =>
+               options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
+
 
 
             services.Configure<CookiePolicyOptions>(options =>
@@ -68,7 +71,7 @@ namespace Self.Web
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Word}/{action=Index}/{id?}");
+                    template: "{controller=Word}/{action=AddWord}/{id?}");
             });
         }
     }

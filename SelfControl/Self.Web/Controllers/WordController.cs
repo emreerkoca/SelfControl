@@ -10,8 +10,6 @@ using Self.Core.Interfaces;
 
 namespace Self.Web.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     public class WordController : Controller
     {
         #region Fields
@@ -22,10 +20,9 @@ namespace Self.Web.Controllers
         public WordController(IWordRepository wordRepository)
         {
             _wordRepository = wordRepository;
-        } 
+        }
         #endregion
 
-        // GET: /<controller>/
         public IActionResult Index()
         {
             return View();
@@ -46,7 +43,7 @@ namespace Self.Web.Controllers
                 return RedirectToAction("Index");
             }
 
-            var result = _wordRepository.Add(newWord);
+            var result = _wordRepository.AddAsync(newWord);
 
             if (result == null)
             {
@@ -56,17 +53,17 @@ namespace Self.Web.Controllers
             return RedirectToAction("WordList");
         }
 
-        public IActionResult WordList()
+        public async Task<IActionResult> WordList()
         {
-            IEnumerable<Word> wordList = _wordRepository.GetList();
+            Task<IReadOnlyList<Word>> wordList = _wordRepository.GetListAsync();
 
             return View(wordList);
         }
 
 
-        public IActionResult JumpWord()
+        public async Task<IActionResult> GetRandomWord()
         {
-            Word word = _wordRepository.GetRandomWord();
+            Task<Word> word = _wordRepository.GetRandomWordAsync();
 
             return PartialView("JumpWordPartial",word);
         }
