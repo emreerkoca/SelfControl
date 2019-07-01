@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Self.Infrastructure", "Self
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Self.Web", "Self.Web\Self.Web.csproj", "{F109ACDB-B494-4397-9113-B36E2A948B94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Self.Web.Api", "Self.Web.Api\Self.Web.Api.csproj", "{3D9B93FD-444F-4E0A-AF89-09C646663DA9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Self.Web.Api", "Self.Web.Api\Self.Web.Api.csproj", "{3D9B93FD-444F-4E0A-AF89-09C646663DA9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

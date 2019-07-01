@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -28,6 +30,10 @@ namespace Self.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            CreateIdentityIfNotCreated(services);
+
+
             //Use real database
             services.AddDbContext<AppDbContext> (options => 
                 options.UseSqlServer(Configuration.GetConnectionString("SelfConnection")));
@@ -72,6 +78,47 @@ namespace Self.Web
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Word}/{action=AddWord}/{id?}");
+            });
+        }
+
+        private static void CreateIdentityIfNotCreated(IServiceCollection services)
+        {
+            var serviceProvider = services.BuildServiceProvider();
+
+            using (var scope = serviceProvider.CreateScope())
+            {
+                var existingUserManager = scope.ServiceProvider
+                    .GetService<UserManager<ApplicationUser>>();
+
+                if(existingUserManager == null)
+                {
+                    services.AddIdentity<ApplicationUser, IdentityRole>()
+                        .AddDefaultUI(UIFramework.Bootstrap4)
+                        .AddEntityFrameworkStores<AppIdentityDbContext>()
+                        .AddDefaultTokenProviders();
+                }
+            }
+        }
+
+        private static void ConnfigureCookieSettings(IServiceCollection services) 
+        {
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromHours(1);
+                options.LoginPath = "/Account/Login";
+                options.LogoutPath = "/Account/Logout";
+
+                options.Cookie = new CookieBuilder
+                {
+                    IsEssential = true
+                };
             });
         }
     }
