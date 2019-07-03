@@ -30,6 +30,7 @@ namespace Self.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            ConnfigureCookieSettings(services);
 
             CreateIdentityIfNotCreated(services);
 
@@ -53,7 +54,14 @@ namespace Self.Web
 
             services.AddScoped<IWordRepository, WordRepository>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            #region snippet_AllowAreas
+            services.AddMvc()
+                    .AddRazorPagesOptions(options => options.AllowAreas = true)
+                    .SetCompatibilityVersion(CompatibilityVersion.Version_2_1); ;
+            #endregion
+
+            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,8 +81,13 @@ namespace Self.Web
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
+
+
             app.UseMvc(routes =>
             {
+                routes.MapRoute(name: "mvcAreaRoute",
+                  template: "{area:exists}/{controller=Word}/{action=AddWord}");
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Word}/{action=AddWord}/{id?}");
