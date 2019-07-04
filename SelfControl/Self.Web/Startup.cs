@@ -81,7 +81,7 @@ namespace Self.Web
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
-
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
@@ -125,8 +125,8 @@ namespace Self.Web
             {
                 options.Cookie.HttpOnly = true;
                 options.ExpireTimeSpan = TimeSpan.FromHours(1);
-                options.LoginPath = "/Account/Login";
-                options.LogoutPath = "/Account/Logout";
+                options.LoginPath = "/Identity/Account/Login";
+                options.LogoutPath = "/Identity/Account/Logout";
 
                 options.Cookie = new CookieBuilder
                 {
