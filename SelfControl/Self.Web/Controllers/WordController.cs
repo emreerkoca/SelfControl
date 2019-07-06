@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Self.Core.Entities;
 using Self.Core.Interfaces;
@@ -10,6 +11,7 @@ using Self.Core.Interfaces;
 
 namespace Self.Web.Controllers
 {
+    [Authorize]
     public class WordController : Controller
     {
         #region Fields

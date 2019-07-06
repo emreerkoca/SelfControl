@@ -86,11 +86,11 @@ namespace Self.Web
             app.UseMvc(routes =>
             {
                 routes.MapRoute(name: "mvcAreaRoute",
-                  template: "{area:exists}/{controller=Word}/{action=AddWord}");
+                  template: "{area:exists}/{controller=Word}/{action=Index}");
 
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Word}/{action=AddWord}/{id?}");
+                    template: "{controller=Word}/{action=Index}/{id?}");
             });
         }
 

@@ -1,40 +1,22 @@
-﻿@if (Context.User.Identity.IsAuthenticated)
+﻿<ul class="nav navbar-nav">
+@if (Context.User.Identity.IsAuthenticated)
 {
-    <section class="col-lg-4 col-md-5 col-xs-12">
-        <div class="esh-identity">
-            <form asp-area="Identity" asp-page="/Account/Logout" method="post" id="logoutForm" class="navbar-right">
-                <section>
-                    <ul class="nav navbar-nav">
-                        <li>
-                            <div>@Context.User.Identity.Name</div>
-                        </li>
-                        <li>
-                            <a asp-controller="Manage" asp-action="MyAccount">
-                                <div>My account</div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:document.getElementById('logoutForm').submit()">
-                                <div>Log Out</div>
-                            </a>
-                        </li>
-                    </ul>
-                </section>
-            </form>
-        </div>
-    </section>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @Context.User.Identity.Name!</a>
+    </li>
+    <li class="nav-item">
+        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Word", new { area = "" })">
+            <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+        </form>
+    </li>
 }
 else
 {
-    <section class="col-lg-4 col-md-5 col-xs-12">
-        <div class="esh-identity">
-            <section>
-                <div>
-                    <a asp-area="Identity" asp-page="/Account/Login" class="esh-identity-name esh-identity-name--upper">
-                        Login
-                    </a>
-                </div>
-            </section>
-        </div>
-    </section>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+    </li>
 }
+</ul>
