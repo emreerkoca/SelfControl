@@ -36,14 +36,14 @@ namespace Self.Web.Controllers
 
 
         [HttpPost]
-        public IActionResult AddWord(Word newWord)
+        public async Task<IActionResult> AddWord(Word newWord)
         {
             if (!ModelState.IsValid)
             {
                 return RedirectToAction("Index");
             }
 
-            var result = _wordRepository.AddAsync(newWord);
+            var result = await _wordRepository.AddAsync(newWord);
 
             if (result == null)
             {
@@ -55,11 +55,51 @@ namespace Self.Web.Controllers
 
         public async Task<IActionResult> WordList()
         {
-            Task<IReadOnlyList<Word>> wordList = _wordRepository.GetListAsync();
+            IReadOnlyList<Word> wordList = await _wordRepository.GetListAsync();
 
             return View(wordList);
         }
 
+        #region Update Word
+        [HttpGet]
+        public async Task<IActionResult> UpdateWord(int wordId)
+        {
+            Word word = new Word();
+            word = await _wordRepository.GetByIdAsync(wordId);
+
+            return View(word);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateWord(Word updatedWord)
+        {
+            var result = await _wordRepository.UpdateAsync(updatedWord);
+
+            if (!result)
+            {
+                return BadRequest("Could not update word.");
+            }
+
+            return RedirectToAction("WordList");
+        }
+        #endregion
+
+        #region Delete Word
+        public async Task<IActionResult> DeleteWord(int wordId)
+        {
+            Word deletedWord = await _wordRepository.GetByIdAsync(wordId);
+
+            var result = await _wordRepository.DeleteAsync(deletedWord);
+
+            if (!result)
+            {
+                return BadRequest("Could not delete word.");
+            }
+
+            return RedirectToAction("WordList");
+
+        }
+        #endregion
 
         public async Task<IActionResult> GetRandomWord()
         {

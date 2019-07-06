@@ -10,7 +10,7 @@ namespace Self.Core.Interfaces
         T GetById(int id);
         IEnumerable<T> GetList();
         T Add(T entity);
-        void Update(T entity);
-        void Delete(T entity);
+        bool Update(T entity);
+        bool Delete(T entity);
     }
 }

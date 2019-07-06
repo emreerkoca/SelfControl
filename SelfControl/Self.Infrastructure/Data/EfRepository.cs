@@ -29,21 +29,25 @@ namespace Self.Infrastructure.Data
         public async Task<T> AddAsync(T entity)
         {
             _appDbContext.Set<T>().Add(entity);
-             await _appDbContext.SaveChangesAsync();
+            await _appDbContext.SaveChangesAsync();
 
             return  entity;
         }
 
-        public void Delete(T entity)
+        public async Task<bool> DeleteAsync(T entity)
         {
             _appDbContext.Set<T>().Remove(entity);
-            _appDbContext.SaveChangesAsync();
+            var saveResult = await _appDbContext.SaveChangesAsync();
+
+            return saveResult == 1;
         }
 
-        public async Task DeleteAsync(T entity)
+        public bool Delete(T entity)
         {
             _appDbContext.Set<T>().Remove(entity);
-            await _appDbContext.SaveChangesAsync();
+            var saveResult = _appDbContext.SaveChanges();
+
+            return saveResult == 1;
         }
 
         public virtual T GetById(int id)
@@ -66,16 +70,20 @@ namespace Self.Infrastructure.Data
             return await _appDbContext.Set<T>().ToListAsync();
         }
 
-        public void Update(T entity)
+        public bool Update(T entity)
         {
             _appDbContext.Entry(entity).State = EntityState.Modified;
-            _appDbContext.SaveChanges();
+            var saveResult = _appDbContext.SaveChanges();
+
+            return saveResult == 1;
         }
 
-        public async Task UpdateAsync(T entity)
+        public async Task<bool> UpdateAsync(T entity)
         {
             _appDbContext.Entry(entity).State = EntityState.Modified;
-            await _appDbContext.SaveChangesAsync();
+            var saveResult = await _appDbContext.SaveChangesAsync();
+
+            return saveResult == 1;
         }
     }
 }

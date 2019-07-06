@@ -11,7 +11,7 @@ namespace Self.Core.Interfaces
         Task<T> GetByIdAsync(int id); 
         Task<IReadOnlyList<T>> GetListAsync();
         Task<T> AddAsync(T entity);
-        Task UpdateAsync(T entity);
-        Task DeleteAsync(T entity);
+        Task<bool> UpdateAsync(T entity);
+        Task<bool> DeleteAsync(T entity);
     }
 }
