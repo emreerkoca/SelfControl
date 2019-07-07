@@ -13,58 +13,62 @@
 
 </div>
 
-<form asp-action="AddWord" asp-controller="Word" class="form form-horizontal" method="post">
-    <div class="edit-items">
-        <div class="col-md-6 col-xs-12 center">
-            <div class="col-md-12">
-                <input asp-for="OriginalWord" id="OriginalWord" placeholder="Word" />
+<div class="row">
+    <div class="col-md-6 col-xs-12">
+        <form asp-action="AddWord" asp-controller="Word" method="post">
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="OriginalWord">Original Word</label>
+                <input asp-for="OriginalWord" id="OriginalWord" class="form-control" />
+                <span asp-validation-for="OriginalWord" class="text-danger"></span>
             </div>
-            <div class="col-md-12">
-                <input asp-for="TranslatedWord" id="TranslatedWord" placeholder="Mean" />
+            <div class="form-group">
+                <label asp-for="TranslatedWord">Translated Word</label>
+                <input asp-for="TranslatedWord" id="TranslatedWord" class="form-control" />
+                <span asp-validation-for="TranslatedWord" class="text-danger"></span>
             </div>
-            <div class="col-md-12">
-                <textarea asp-for="Sentence" id="Sentence" rows="4" maxlength="140" placeholder="Example Sentence"></textarea>
+            <div class="form-group">
+                <label asp-for="Sentence">Sample Sentence</label>
+                <textarea asp-for="Sentence" id="Sentence" rows="4" maxlength="140" class="form-control"></textarea>
+                <span asp-validation-for="Sentence" class="text-danger"></span>
             </div>
-            <div class="col-lg-offset-6 col-md-6">
-                <button type="submit" class="custom-button put-it-right">Add</button>
+            <div class="form-group">
+                <button type="submit" class="btn btn-light">Add</button>
             </div>
-        </div>
-        <div class="clearfix"></div>
+        </form>
     </div>
-</form>
-
-<div>
-    <a href="javascript:void(0);" class="jump-word btn btn-info">Jump a Word</a>
 </div>
 
 
-@section Scripts
-    {
-    <script>
+
+    @section Scripts
+        {
+        <script>
 
 
 
-        var getRandomWordPostBackURL = '/Word/GetRandomWord';
-        $(function () {
-            $(".jump-word").click(function () {
-                $.ajax({
-                    type: "GET",
-                    url: getRandomWordPostBackURL,
-                    contentType: "application/json; charset=utf-8",
-                    success: function (data) {
+            var getRandomWordPostBackURL = '/Word/GetRandomWord';
+            $(function () {
+                $(".jump-word").click(function () {
+                    $.ajax({
+                        type: "GET",
+                        url: getRandomWordPostBackURL,
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
 
-                        $('#myModalContent').html(data);
-                        $('#myModal').modal('show');
-                    },
-                    error: function () {
-                        alert("Dynamic content load failed!");
-                    }
+                            $('#myModalContent').html(data);
+                            $('#myModal').modal('show');
+                        },
+                        error: function () {
+                            alert("Dynamic content load failed!");
+                        }
 
+                    });
                 });
             });
-        });
-    </script>
-}
+        </script>
+    }
 
 
 

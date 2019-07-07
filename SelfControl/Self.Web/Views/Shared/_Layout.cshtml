@@ -20,7 +20,7 @@
     <nav class="navbar navbar-fixed-top navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container">
             <div class="navbar-header">
-                <a asp-area="" asp-controller="Word" asp-action="Index" class="navbar-brand">SelfControl</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">SelfControl</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -29,15 +29,18 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav flex-grow-1">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Word" asp-action="Index">Explore</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Explore">Explore</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Word" asp-action="Index">About</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About</a>
                     </li>
                     @if (Context.User.Identity.IsAuthenticated)
                     {
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Word" asp-action="AddWord">Self Learn</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Word" asp-action="AddWord">Add Word</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Word" asp-action="WordList">Word List</a>
                         </li>
                     }
                 </ul>
@@ -50,12 +53,9 @@
     <partial name="_CookieConsentPartial" />
 
     <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2019 - SelfControl</p>
-        </footer>
+            @RenderBody()
     </div>
+ 
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>

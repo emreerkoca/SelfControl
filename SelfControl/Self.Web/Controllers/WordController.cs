@@ -25,11 +25,6 @@ namespace Self.Web.Controllers
         }
         #endregion
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         [HttpGet]
         public IActionResult AddWord()
         {

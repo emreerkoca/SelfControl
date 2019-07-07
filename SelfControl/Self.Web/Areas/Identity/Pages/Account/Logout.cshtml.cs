@@ -39,7 +39,7 @@ namespace Self.Web.Areas.Identity.Pages.Account
             }
             else
             {
-                return RedirectToPage("/Index");
+                return RedirectToAction("Index", "Home", new { area = "" });
             }
         }
     }
