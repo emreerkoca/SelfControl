@@ -1,4 +1,4 @@
-###Project Explanation
+### Project Explanation
 
 Project made for create .Net Core N-Layer Architecture Sample Project.
 
@@ -10,7 +10,7 @@ Project made for create .Net Core N-Layer Architecture Sample Project.
 2. Translated Word: Translation of original word in (her / his) native language.
 3. Sample Sentence: Sample sentence about original word.
 
-Example Usage: 
+##### Example Usage: 
 
 - Original Word: ambitious
 - Translated Word: ehrgeizig
