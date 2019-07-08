@@ -3,8 +3,8 @@
 Project made for create .Net Core N-Layer Architecture Sample Project.
 
 - Users can be learn a new language with this project. 
-- Users can save words object. 
-- Words object parts: Original Word, Translated Word, Sample Sentence
+- Users can save word object. 
+- Word object parts: Original Word, Translated Word, Sample Sentence
 
 1. Original Word: A word from the language (she / he) wants to learn.
 2. Translated Word: Translation of original word in (her / his) native language.
