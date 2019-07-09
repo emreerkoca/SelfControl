@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Self.Core.Entities;
 using Self.Core.Interfaces;
+using Self.Infrastructure.Identity;
+using Self.Web.Services;
+using Self.Web.ViewModels.Basket;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,12 +20,19 @@ namespace Self.Web.Controllers
     {
         #region Fields
         IWordRepository _wordRepository;
+        public BasketViewModel BasketModel { get; set; } = new BasketViewModel();
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IBasketViewModelService _basketViewModelService;
         #endregion
 
         #region Ctor
-        public WordController(IWordRepository wordRepository)
+        public WordController(IWordRepository wordRepository, 
+            SignInManager<ApplicationUser> signInManager,
+            IBasketViewModelService basketViewModelService)
         {
             _wordRepository = wordRepository;
+            _signInManager = signInManager;
+            _basketViewModelService = basketViewModelService;
         }
         #endregion
 
@@ -52,7 +63,7 @@ namespace Self.Web.Controllers
 
         public async Task<IActionResult> WordList()
         {
-            IReadOnlyList<Word> wordList = await _wordRepository.GetListAsync();
+            IReadOnlyList<Word> wordList = await _wordRepository.GetListAllAsync();
 
             return View(wordList);
         }
@@ -103,6 +114,14 @@ namespace Self.Web.Controllers
             Task<Word> word = _wordRepository.GetRandomWordAsync();
 
             return PartialView("JumpWordPartial",word);
+        }
+
+        private async Task SetBasketModelAsync()
+        {
+            if (_signInManager.IsSignedIn(HttpContext.User))
+            {
+                BasketModel = await _basketViewModelService.GetOrCreateBasketForUserAsync(User.Identity.Name);
+            }
         }
     }
 }
