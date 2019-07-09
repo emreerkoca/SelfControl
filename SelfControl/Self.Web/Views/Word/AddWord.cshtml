@@ -33,6 +33,7 @@
                 <textarea asp-for="Sentence" id="Sentence" rows="4" maxlength="140" class="form-control"></textarea>
                 <span asp-validation-for="Sentence" class="text-danger"></span>
             </div>
+            <input type="hidden"  asp-for="OwnerId" value="@User.Identity.Name"/>
             <div class="form-group">
                 <button type="submit" class="btn btn-light">Add</button>
             </div>

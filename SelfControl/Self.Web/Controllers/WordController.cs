@@ -8,8 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 using Self.Core.Entities;
 using Self.Core.Interfaces;
 using Self.Infrastructure.Identity;
-using Self.Web.Services;
-using Self.Web.ViewModels.Basket;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -20,19 +18,15 @@ namespace Self.Web.Controllers
     {
         #region Fields
         IWordRepository _wordRepository;
-        public BasketViewModel BasketModel { get; set; } = new BasketViewModel();
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly IBasketViewModelService _basketViewModelService;
         #endregion
 
         #region Ctor
         public WordController(IWordRepository wordRepository, 
-            SignInManager<ApplicationUser> signInManager,
-            IBasketViewModelService basketViewModelService)
+            SignInManager<ApplicationUser> signInManager)
         {
             _wordRepository = wordRepository;
             _signInManager = signInManager;
-            _basketViewModelService = basketViewModelService;
         }
         #endregion
 
@@ -50,6 +44,8 @@ namespace Self.Web.Controllers
             {
                 return RedirectToAction("Index");
             }
+
+            //newWord.OwnerId = User.Identity.Name;
 
             var result = await _wordRepository.AddAsync(newWord);
 
@@ -114,14 +110,6 @@ namespace Self.Web.Controllers
             Task<Word> word = _wordRepository.GetRandomWordAsync();
 
             return PartialView("JumpWordPartial",word);
-        }
-
-        private async Task SetBasketModelAsync()
-        {
-            if (_signInManager.IsSignedIn(HttpContext.User))
-            {
-                BasketModel = await _basketViewModelService.GetOrCreateBasketForUserAsync(User.Identity.Name);
-            }
         }
     }
 }

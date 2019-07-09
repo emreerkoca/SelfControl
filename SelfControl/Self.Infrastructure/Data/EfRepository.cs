@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Self.Core.Entities;
 using Self.Core.Interfaces;
-using Self.Core.Specifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,11 +65,6 @@ namespace Self.Infrastructure.Data
             return _appDbContext.Set<T>().AsEnumerable();
         }
 
-        public async Task<IReadOnlyList<T>> GetListAsync(ISpecification<T> specification)
-        {
-            return await ApplySpecification(specification).ToListAsync();
-        }
-
         public bool Update(T entity)
         {
             _appDbContext.Entry(entity).State = EntityState.Modified;
@@ -90,11 +84,6 @@ namespace Self.Infrastructure.Data
         public async Task<IReadOnlyList<T>> GetListAllAsync()
         {
             return await _appDbContext.Set<T>().ToListAsync();
-        }
-
-        private IQueryable<T> ApplySpecification(ISpecification<T> specification)
-        {
-            return SpecificationEvaluator<T>.GetQuery(_appDbContext.Set<T>().AsQueryable(), specification);
         }
     }
 }

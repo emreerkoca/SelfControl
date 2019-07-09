@@ -52,6 +52,8 @@ namespace Self.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
+
             services.AddScoped<IWordRepository, WordRepository>();
 
 

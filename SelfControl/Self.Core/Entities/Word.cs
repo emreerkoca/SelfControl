@@ -23,5 +23,9 @@ namespace Self.Core.Entities
         public int ViewCount { get; set; }
 
         public string Sentence { get; set; }
+
+        [Required]
+        public string OwnerId { get; set; }
+
     }
 }
