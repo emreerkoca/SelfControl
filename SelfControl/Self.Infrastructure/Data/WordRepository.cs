@@ -25,5 +25,10 @@ namespace Self.Infrastructure.Data
             return _appDbContext.Word.OrderBy(r => Guid.NewGuid()).Skip(2).Take(1).FirstAsync();
         }
 
+        public async Task<IReadOnlyList<Word>> GetListByUserAsync(string userName)
+        {
+            return await _appDbContext.Word.Where(x => x.OwnerId == userName).ToListAsync();
+        }
+
     }
 }

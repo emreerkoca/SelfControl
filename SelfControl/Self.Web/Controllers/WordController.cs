@@ -59,7 +59,7 @@ namespace Self.Web.Controllers
 
         public async Task<IActionResult> WordList()
         {
-            IReadOnlyList<Word> wordList = await _wordRepository.GetListAllAsync();
+            IReadOnlyList<Word> wordList = await _wordRepository.GetListByUserAsync(User.Identity.Name);
 
             return View(wordList);
         }

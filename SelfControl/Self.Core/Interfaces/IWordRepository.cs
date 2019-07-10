@@ -10,5 +10,6 @@ namespace Self.Core.Interfaces
     {
         Word GetRandomWord();
         Task<Word> GetRandomWordAsync();
+        Task<IReadOnlyList<Word>> GetListByUserAsync(string userName);
     }
 }
