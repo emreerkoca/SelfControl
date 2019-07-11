@@ -13,7 +13,7 @@ using Self.Infrastructure.Identity;
 
 namespace Self.Web.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class WordController : Controller
     {
         #region Fields
@@ -59,7 +59,7 @@ namespace Self.Web.Controllers
 
         public async Task<IActionResult> WordList()
         {
-            IReadOnlyList<Word> wordList = await _wordRepository.GetListByUserAsync(User.Identity.Name);
+            IReadOnlyList<Word> wordList = await _wordRepository.GetListByUserAsync("emreerkoca@outlook.com");
 
             return View(wordList);
         }

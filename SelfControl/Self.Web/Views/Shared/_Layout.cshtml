@@ -34,15 +34,15 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About</a>
                     </li>
-                    @if (Context.User.Identity.IsAuthenticated)
-                    {
+                    @*@if (Context.User.Identity.IsAuthenticated)
+                    {*@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Word" asp-action="AddWord">Add Word</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Word" asp-action="WordList">Word List</a>
                         </li>
-                    }
+                    @*}*@
                 </ul>
                 <partial name="_LoginPartial" />
             </div>
