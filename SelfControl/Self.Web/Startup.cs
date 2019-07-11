@@ -34,16 +34,23 @@ namespace Self.Web
 
             CreateIdentityIfNotCreated(services);
 
+            // Use SQL Database if in Azure, otherwise, use local database
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production") {
+                services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("MyDbConnection")));
+            }
+            else {
+                //Use real database
+                services.AddDbContext<AppDbContext>(options =>
+                   options.UseSqlServer(Configuration.GetConnectionString("SelfConnection")));
 
-            //Use real database
-            services.AddDbContext<AppDbContext> (options => 
-                options.UseSqlServer(Configuration.GetConnectionString("SelfConnection")));
+                //Add Identity DbContext
+                services.AddDbContext<AppIdentityDbContext>(options =>
+                   options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
+            }
 
-            //Add Identity DbContext
-            services.AddDbContext<AppIdentityDbContext>(options =>
-               options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
-
-
+            // Automatically perform database migration
+            services.BuildServiceProvider().GetService<AppDbContext>().Database.Migrate();
 
             services.Configure<CookiePolicyOptions>(options =>
             {
