@@ -7,13 +7,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Self.Core.Entities;
 using Self.Core.Interfaces;
-using Self.Infrastructure.Identity;
+using Self.Infrastructure.Data;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Self.Web.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class WordController : Controller
     {
         #region Fields
@@ -59,7 +59,7 @@ namespace Self.Web.Controllers
 
         public async Task<IActionResult> WordList()
         {
-            IReadOnlyList<Word> wordList = await _wordRepository.GetListByUserAsync("emreerkoca@outlook.com");
+            IReadOnlyList<Word> wordList = await _wordRepository.GetListByUserAsync(User.Identity.Name);
 
             return View(wordList);
         }

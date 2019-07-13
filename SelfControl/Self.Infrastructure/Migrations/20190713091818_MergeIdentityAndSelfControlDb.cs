@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Self.Infrastructure.Migrations.AppIdentityDb
+namespace Self.Infrastructure.Migrations
 {
-    public partial class IdentityMigration : Migration
+    public partial class MergeIdentityAndSelfControlDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

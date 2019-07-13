@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Self.Infrastructure.Identity
+namespace Self.Infrastructure.Data
 {
     public class ApplicationUser : IdentityUser
     {

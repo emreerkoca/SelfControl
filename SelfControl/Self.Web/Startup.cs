@@ -14,7 +14,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Self.Core.Interfaces;
 using Self.Infrastructure.Data;
-using Self.Infrastructure.Identity;
 
 namespace Self.Web
 {
@@ -43,10 +42,6 @@ namespace Self.Web
                 //Use real database
                 services.AddDbContext<AppDbContext>(options =>
                    options.UseSqlServer(Configuration.GetConnectionString("SelfConnection")));
-
-                //Add Identity DbContext
-                services.AddDbContext<AppIdentityDbContext>(options =>
-                   options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
             }
 
             // Automatically perform database migration
@@ -116,7 +111,7 @@ namespace Self.Web
                 {
                     services.AddIdentity<ApplicationUser, IdentityRole>()
                         .AddDefaultUI(UIFramework.Bootstrap4)
-                        .AddEntityFrameworkStores<AppIdentityDbContext>()
+                        .AddEntityFrameworkStores<AppDbContext>()
                         .AddDefaultTokenProviders();
                 }
             }

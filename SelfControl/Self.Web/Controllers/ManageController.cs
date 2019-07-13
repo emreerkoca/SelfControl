@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Self.Core.Interfaces;
-using Self.Infrastructure.Identity;
+using Self.Infrastructure.Data;
 using Self.Web.Extensions;
 using Self.Web.ViewModels.Manage;
 
