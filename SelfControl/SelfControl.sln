@@ -15,8 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Self.Infrastructure", "Self
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Self.Web", "Self.Web\Self.Web.csproj", "{F109ACDB-B494-4397-9113-B36E2A948B94}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Self.Web.Api", "Self.Web.Api\Self.Web.Api.csproj", "{3D9B93FD-444F-4E0A-AF89-09C646663DA9}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,10 +37,6 @@ Global
 		{F109ACDB-B494-4397-9113-B36E2A948B94}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F109ACDB-B494-4397-9113-B36E2A948B94}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F109ACDB-B494-4397-9113-B36E2A948B94}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3D9B93FD-444F-4E0A-AF89-09C646663DA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3D9B93FD-444F-4E0A-AF89-09C646663DA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3D9B93FD-444F-4E0A-AF89-09C646663DA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3D9B93FD-444F-4E0A-AF89-09C646663DA9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,7 +46,6 @@ Global
 		{A4FA04A0-D1A7-423C-A814-71E6776F4130} = {01F85F30-79BC-476C-A6CC-A066DEF9074E}
 		{BA866CC2-5BC2-4F49-94C2-89E18B4A74E5} = {C4973A28-687F-4517-AE4D-C111E6BBFA81}
 		{F109ACDB-B494-4397-9113-B36E2A948B94} = {C4973A28-687F-4517-AE4D-C111E6BBFA81}
-		{3D9B93FD-444F-4E0A-AF89-09C646663DA9} = {C4973A28-687F-4517-AE4D-C111E6BBFA81}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BB16B4F8-FAA4-4F1F-BC35-BDDC8DD3BC24}
