@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using CsvHelper;
 
 namespace Self.Infrastructure.Data
 {
@@ -30,5 +32,13 @@ namespace Self.Infrastructure.Data
             return await _appDbContext.Word.Where(x => x.OwnerId == userName).ToListAsync();
         }
 
+        public async Task ExportToFileAsync(string filePath, IReadOnlyList<Word> words)
+        {
+            TextWriter textWriter = new StreamWriter(File.Open(filePath, FileMode.Create), Encoding.UTF8);
+            var csvWriter = new CsvWriter(textWriter);
+
+            csvWriter.WriteRecords(words);
+            textWriter.Close();
+        }
     }
 }

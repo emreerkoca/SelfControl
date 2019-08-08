@@ -78,3 +78,8 @@ body {
     margin-bottom: 200px;
 }
 
+.export-to-csv {
+    float: right;
+    margin-top: -35px;
+}
+

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -110,6 +111,22 @@ namespace Self.Web.Controllers
             Task<Word> word = _wordRepository.GetRandomWordAsync();
 
             return PartialView("JumpWordPartial",word);
+        }
+
+        public async Task<ActionResult> ExportWords()
+        {
+            var words = await _wordRepository.GetListByUserAsync(User.Identity.Name);
+
+            if(words == null)
+            {
+                return BadRequest("Could not get words!");
+            }
+
+            string filePath = Directory.GetCurrentDirectory() + @"NewWords.csv";
+
+            await _wordRepository.ExportToFileAsync(filePath, words);
+
+            return RedirectToAction("WordList", "Word");
         }
     }
 }
