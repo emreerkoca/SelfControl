@@ -40,6 +40,8 @@ namespace Self.WebSpa.Controllers
         #endregion
 
         #region Get Word List
+        [HttpGet]
+        [Route("WordList")]
         public async Task<IActionResult> WordList()
         {
             IReadOnlyList<Word> wordList = await _wordRepository.GetListAllAsync();

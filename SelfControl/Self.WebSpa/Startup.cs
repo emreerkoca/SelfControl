@@ -2,9 +2,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Self.Core.Interfaces;
+using Self.Infrastructure.Data;
+using System;
 
 namespace Self.WebSpa
 {
@@ -26,6 +30,28 @@ namespace Self.WebSpa
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
+            {
+                services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("MyDbConnection")));
+            }
+            else
+            {
+                //Use real database
+                services.AddDbContext<AppDbContext>(options =>
+                   options.UseSqlServer(Configuration.GetConnectionString("SelfConnection")));
+            }
+
+            services.AddScoped<IWordRepository, WordRepository>();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder =>
+                    builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,6 +68,7 @@ namespace Self.WebSpa
                 app.UseHsts();
             }
 
+            app.UseCors("CorsPolicy");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             if (!env.IsDevelopment())

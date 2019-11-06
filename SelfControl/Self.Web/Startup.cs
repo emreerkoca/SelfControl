@@ -61,8 +61,7 @@ namespace Self.Web
 
             #region snippet_AllowAreas
             services.AddMvc()
-                    .AddRazorPagesOptions(options => options.AllowAreas = true)
-                    .SetCompatibilityVersion(CompatibilityVersion.Version_2_1); ;
+                    .SetCompatibilityVersion(CompatibilityVersion.Version_3_0); ;
             #endregion
 
             //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -110,7 +109,6 @@ namespace Self.Web
                 if(existingUserManager == null)
                 {
                     services.AddIdentity<ApplicationUser, IdentityRole>()
-                        .AddDefaultUI(UIFramework.Bootstrap4)
                         .AddEntityFrameworkStores<AppDbContext>()
                         .AddDefaultTokenProviders();
                 }

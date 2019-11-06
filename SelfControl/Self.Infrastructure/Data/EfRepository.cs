@@ -55,7 +55,7 @@ namespace Self.Infrastructure.Data
             return _appDbContext.Set<T>().Find(id);
         }
 
-        public virtual Task<T> GetByIdAsync(int id)
+        public virtual ValueTask<T> GetByIdAsync(int id)
         {
             return _appDbContext.Set<T>().FindAsync(id);
         }

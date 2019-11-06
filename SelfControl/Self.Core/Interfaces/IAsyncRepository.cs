@@ -8,7 +8,7 @@ namespace Self.Core.Interfaces
 {
     public interface IAsyncRepository<T> where T : BaseEntity
     {
-        Task<T> GetByIdAsync(int id); 
+        ValueTask<T> GetByIdAsync(int id); 
         Task<IReadOnlyList<T>> GetListAllAsync();
         Task<T> AddAsync(T entity);
         Task<bool> UpdateAsync(T entity);
