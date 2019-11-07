@@ -9,6 +9,9 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { AddWordComponent } from './add-word/add-word.component';
+import { UpdateWordComponent } from './update-word/update-word.component';
+import { GetWordsComponent } from './get-words/get-words.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +19,10 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
     NavMenuComponent,
     HomeComponent,
     CounterComponent,
-    FetchDataComponent
+    FetchDataComponent,
+    AddWordComponent,
+    UpdateWordComponent,
+    GetWordsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -26,6 +32,10 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
+      { path: 'add-word', component: AddWordComponent },
+      { path: 'update-word/:id', component: UpdateWordComponent },
+      { path: 'get-words', component: GetWordsComponent },
+      { path: '**', redirectTo: '/' } // for invalid paths
     ])
   ],
   providers: [],
