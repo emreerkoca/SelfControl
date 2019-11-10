@@ -1,1 +1,25 @@
-<p>get-words works!</p>
+<h1>Words</h1>
+
+<p *ngIf="!(words | async)"><em>Loading...</em></p>
+<p>
+  <a [routerLink]="['/add']" class="btn btn-primary float-right mb-3">New Word</a>
+</p>
+
+<table class="table table-sm table-hover" *ngIf="(words | async)?.length>0">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Original</th>
+      <th>Translated</th>
+      <th>Sentence</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let word of (words | async)">
+      <td>{{ word.wordId }}</td>
+      <td>{{ word.originalWord }}</td>
+      <td>{{ word.translatedWord }}</td>
+      <td>{{ word.sentence }}</td>
+    </tr>
+  </tbody>
+</table>

@@ -16,7 +16,7 @@ export class WordService {
 
   constructor(private httpClient: HttpClient) {
     this.wordApiUrl = environment.appUrl;
-    this.additionalUrlPart = '/api/Word/WordList/';
+    this.additionalUrlPart = 'api/Word/WordList/';
   }
 
   getWords(): Observable<Word[]> {
