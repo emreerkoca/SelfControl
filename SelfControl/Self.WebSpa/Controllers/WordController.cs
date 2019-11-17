@@ -25,7 +25,20 @@ namespace Self.WebSpa.Controllers
         #endregion
 
         #region Actions
+        #region GetWord
+        [HttpGet]
+        [Route("GetWord")]
+        public async Task<IActionResult> GetWordById(int wordId)
+        {
+            Word word = await _wordRepository.GetByIdAsync(wordId);
+
+            return Ok(word);
+        } 
+        #endregion
+
         #region Add Word
+        [HttpPost]
+        [Route("AddWord")]
         public async Task<IActionResult> AddWord(Word newWord)
         {
             var result = await _wordRepository.AddAsync(newWord);
@@ -55,7 +68,9 @@ namespace Self.WebSpa.Controllers
         }
         #endregion
 
-        #region Update Word
+        #region Update Word   
+        [HttpPut]
+        [Route("UpdateWord")]
         public async Task<IActionResult> UpdateWord(Word updatedWord)
         {
             var result = await _wordRepository.UpdateAsync(updatedWord);

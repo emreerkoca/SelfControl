@@ -1,0 +1,34 @@
+<h1>{{actionType}} Word</h1>
+<form [formGroup]="form" (ngSubmit)="addOrUpdateWord()" #formDir="ngForm" novalidate>
+  <div class="form-group row">
+    <label class=" control-label col-md-12">Original Word</label>
+    <div class="col-md-12">
+      <input class="form-control" type="text" formControlName="originalWord">
+    </div>
+    <span class="text-danger ml-3" *ngIf="originalWord.invalid && formDir.submitted">
+      Original word is required.
+    </span>
+  </div>
+  <div class="form-group row">
+    <label class=" control-label col-md-12">Translated Word</label>
+    <div class="col-md-12">
+      <input class="form-control" type="text" formControlName="translatedWord">
+    </div>
+    <span class="text-danger ml-3" *ngIf="translatedWord.invalid && formDir.submitted">
+      Translated word is required.
+    </span>
+  </div>
+  <div class="form-group row">
+    <label class="control-label col-md-12" for="sentence">Sentence</label>
+    <div class="col-md-12">
+      <textarea class="form-control" rows="3" formControlName="sentence"></textarea>
+    </div>
+    <span class="text-danger ml-3" *ngIf="sentence.invalid && formDir.submitted">
+      Sentence is required.
+    </span>
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-success float-right">Save</button>
+    <button class="btn btn-secondary float-left" (click)="cancel()">Cancel</button>
+  </div>
+</form>

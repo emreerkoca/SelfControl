@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
@@ -12,15 +12,43 @@ import { Word } from '../_models/word';
 })
 export class WordService {
   wordApiUrl: string;
-  additionalUrlPart: string;
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json; charset=utf-8'
+    })
+  };
 
   constructor(private httpClient: HttpClient) {
-    this.wordApiUrl = environment.appUrl;
-    this.additionalUrlPart = 'api/Word/WordList/';
+    this.wordApiUrl = environment.appUrl + 'api/Word/';
+  }
+
+  getWordById(wordId: number): Observable<Word> {
+    return this.httpClient.get<Word>(this.wordApiUrl + 'GetWord' + wordId)
+      .pipe(
+        retry(1),
+        catchError(this.errorHandler)
+      );
   }
 
   getWords(): Observable<Word[]> {
-    return this.httpClient.get<Word[]>(this.wordApiUrl + this.additionalUrlPart)
+    return this.httpClient.get<Word[]>(this.wordApiUrl + 'WordList')
+      .pipe(
+        retry(1),
+        catchError(this.errorHandler)
+      );
+  }
+
+  addWord(word): Observable<Word> {
+    return this.httpClient.post<Word>
+      (this.wordApiUrl + 'AddWord', JSON.stringify(word), this.httpOptions)
+        .pipe(
+          retry(1),
+          catchError(this.errorHandler)
+        );
+  }
+
+  updateWord(word: Word) {
+    return this.httpClient.put<Word>(this.wordApiUrl + 'UpdateWord', JSON.stringify(word))
       .pipe(
         retry(1),
         catchError(this.errorHandler)

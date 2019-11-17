@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
@@ -9,9 +9,8 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
-import { AddWordComponent } from './add-word/add-word.component';
-import { UpdateWordComponent } from './update-word/update-word.component';
 import { GetWordsComponent } from './get-words/get-words.component';
+import { AddEditWordComponent } from './add-edit-word/add-edit-word.component';
 
 @NgModule({
   declarations: [
@@ -20,20 +19,20 @@ import { GetWordsComponent } from './get-words/get-words.component';
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    AddWordComponent,
-    UpdateWordComponent,
-    GetWordsComponent
+    GetWordsComponent,
+    AddEditWordComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
-      { path: 'add-word', component: AddWordComponent },
-      { path: 'update-word/:id', component: UpdateWordComponent },
+      { path: 'add-edit-word', component: AddEditWordComponent },
+      { path: 'add-edit-word/:id', component: AddEditWordComponent },
       { path: 'get-words', component: GetWordsComponent },
       { path: '**', redirectTo: '/' } // for invalid paths
     ])
