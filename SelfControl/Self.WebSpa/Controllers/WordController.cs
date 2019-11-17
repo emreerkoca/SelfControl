@@ -26,8 +26,7 @@ namespace Self.WebSpa.Controllers
 
         #region Actions
         #region GetWord
-        [HttpGet]
-        [Route("GetWord")]
+        [HttpGet("GetWord/{wordId}")]
         public async Task<IActionResult> GetWordById(int wordId)
         {
             Word word = await _wordRepository.GetByIdAsync(wordId);
@@ -37,8 +36,7 @@ namespace Self.WebSpa.Controllers
         #endregion
 
         #region Add Word
-        [HttpPost]
-        [Route("AddWord")]
+        [HttpPost("AddWord")]
         public async Task<IActionResult> AddWord(Word newWord)
         {
             var result = await _wordRepository.AddAsync(newWord);
@@ -53,8 +51,7 @@ namespace Self.WebSpa.Controllers
         #endregion
 
         #region Get Word List
-        [HttpGet]
-        [Route("WordList")]
+        [HttpGet("WordList")]
         public async Task<IActionResult> WordList()
         {
             IReadOnlyList<Word> wordList = await _wordRepository.GetListAllAsync();
@@ -69,8 +66,7 @@ namespace Self.WebSpa.Controllers
         #endregion
 
         #region Update Word   
-        [HttpPut]
-        [Route("UpdateWord")]
+        [HttpPut("UpdateWord")]
         public async Task<IActionResult> UpdateWord(Word updatedWord)
         {
             var result = await _wordRepository.UpdateAsync(updatedWord);
@@ -85,6 +81,7 @@ namespace Self.WebSpa.Controllers
         #endregion
 
         #region Delete Word
+        [HttpDelete("DeleteWord")]
         public async Task<IActionResult> DeleteWord(int wordId)
         {
             Word deletedWord = await _wordRepository.GetByIdAsync(wordId);

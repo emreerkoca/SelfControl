@@ -22,4 +22,13 @@ export class GetWordsComponent implements OnInit {
     this.words = this.wordService.getWords();
   }
 
+  deleteWord(wordId) {
+    const answer = confirm('Do you want to delete word with id: ' + wordId);
+
+    if (answer) {
+      this.wordService.deleteWord(wordId).subscribe((data) => {
+        this.getWords();
+      });
+    }
+  }
 }

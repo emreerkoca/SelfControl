@@ -31,8 +31,8 @@ import { AddEditWordComponent } from './add-edit-word/add-edit-word.component';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
-      { path: 'add-edit-word', component: AddEditWordComponent },
-      { path: 'add-edit-word/:id', component: AddEditWordComponent },
+      { path: 'add-word', component: AddEditWordComponent },
+      { path: 'edit-word/:id', component: AddEditWordComponent },
       { path: 'get-words', component: GetWordsComponent },
       { path: '**', redirectTo: '/' } // for invalid paths
     ])

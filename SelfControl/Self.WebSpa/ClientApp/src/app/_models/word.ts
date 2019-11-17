@@ -1,5 +1,5 @@
 export class Word {
-    wordId ?: number;
+    id ?: number;
     originalWord: string;
     translatedWord: string;
     sentence: string;

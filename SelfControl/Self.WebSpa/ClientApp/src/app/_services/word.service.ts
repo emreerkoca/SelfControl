@@ -23,7 +23,7 @@ export class WordService {
   }
 
   getWordById(wordId: number): Observable<Word> {
-    return this.httpClient.get<Word>(this.wordApiUrl + 'GetWord' + wordId)
+    return this.httpClient.get<Word>(this.wordApiUrl + 'GetWord/' + wordId)
       .pipe(
         retry(1),
         catchError(this.errorHandler)
@@ -53,6 +53,14 @@ export class WordService {
         retry(1),
         catchError(this.errorHandler)
       );
+  }
+
+  deleteWord(wordId: number) {
+    return this.httpClient.delete<Word>(this.wordApiUrl + 'DeleteWord?wordId=' + wordId)
+        .pipe(
+          retry(1),
+          catchError(this.errorHandler)
+        );
   }
 
   errorHandler(event) {

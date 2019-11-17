@@ -16,10 +16,12 @@
   </thead>
   <tbody>
     <tr *ngFor="let word of (words | async)">
-      <td>{{ word.wordId }}</td>
+      <td>{{ word.id }}</td>
       <td>{{ word.originalWord }}</td>
       <td>{{ word.translatedWord }}</td>
       <td>{{ word.sentence }}</td>
+      <td><a [routerLink]="['/edit-word/', word.id]" class="btn btn-primary btn-sm float-right">Edit</a></td>
+      <td><a [routerLink]="" (click)="deleteWord(word.id)" class="btn btn-danger btn-sm float-right">Delete</a></td>
     </tr>
   </tbody>
 </table>
