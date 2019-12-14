@@ -7,8 +7,6 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { GetWordsComponent } from './get-words/get-words.component';
 import { AddEditWordComponent } from './add-edit-word/add-edit-word.component';
 
@@ -17,8 +15,6 @@ import { AddEditWordComponent } from './add-edit-word/add-edit-word.component';
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    CounterComponent,
-    FetchDataComponent,
     GetWordsComponent,
     AddEditWordComponent
   ],
@@ -29,8 +25,6 @@ import { AddEditWordComponent } from './add-edit-word/add-edit-word.component';
     ReactiveFormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
       { path: 'add-word', component: AddEditWordComponent },
       { path: 'edit-word/:id', component: AddEditWordComponent },
       { path: 'get-words', component: GetWordsComponent },
