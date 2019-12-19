@@ -61,7 +61,6 @@ export class AddEditWordComponent implements OnInit {
 
     if (this.actionType === 'Add') {
       let word: Word = {
-        id: 1,
         originalWord: this.form.get(this.formOriginalWord).value,
         translatedWord: this.form.get(this.formTranslatedWord).value,
         sentence: this.form.get(this.formSentence).value,

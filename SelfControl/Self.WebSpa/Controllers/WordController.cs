@@ -37,7 +37,7 @@ namespace Self.WebSpa.Controllers
 
         #region Add Word
         [HttpPost("AddWord")]
-        public async Task<IActionResult> AddWord(Word newWord)
+        public async Task<IActionResult> AddWord([FromBody] Word newWord)
         {
             var result = await _wordRepository.AddAsync(newWord);
 
