@@ -14,6 +14,7 @@ export class AddEditWordComponent implements OnInit {
   actionType: string;
   formOriginalWord: string;
   formTranslatedWord: string;
+  formEnglishMeaning: string;
   formSentence: string;
   wordId: number;
   errorMessage: any;
@@ -25,6 +26,7 @@ export class AddEditWordComponent implements OnInit {
       this.actionType = 'Add';
       this.formOriginalWord = 'originalWord';
       this.formTranslatedWord = 'translatedWord';
+      this.formEnglishMeaning = 'englishMeaning';
       this.formSentence = 'sentence';
 
       if (this.activatedRoute.snapshot.params[idParameter]) {
@@ -36,6 +38,7 @@ export class AddEditWordComponent implements OnInit {
           wordId: 0,
           originalWord: ['', Validators.required],
           translatedWord: ['', Validators.required],
+          englishMeaning: ['', Validators.required],
           sentence: ['', Validators.required]
         }
       );
@@ -49,6 +52,7 @@ export class AddEditWordComponent implements OnInit {
           this.existingWord = data,
           this.form.controls[this.formOriginalWord].setValue(data.originalWord),
           this.form.controls[this.formTranslatedWord].setValue(data.translatedWord),
+          this.form.controls[this.formEnglishMeaning].setValue(data.englishMeaning),
           this.form.controls[this.formSentence].setValue(data.sentence)
         ));
     }
@@ -63,6 +67,7 @@ export class AddEditWordComponent implements OnInit {
       let word: Word = {
         originalWord: this.form.get(this.formOriginalWord).value,
         translatedWord: this.form.get(this.formTranslatedWord).value,
+        englishMeaning: this.form.get(this.formEnglishMeaning).value,
         sentence: this.form.get(this.formSentence).value,
         ownerId: 'test@sampledomain.com',
         viewCount: 0,
@@ -79,6 +84,7 @@ export class AddEditWordComponent implements OnInit {
         id: this.existingWord.id,
         originalWord: this.form.get(this.formOriginalWord).value,
         translatedWord: this.form.get(this.formTranslatedWord).value,
+        englishMeaning: this.form.get(this.formEnglishMeaning).value,
         sentence: this.form.get(this.formSentence).value,
         ownerId: this.existingWord.ownerId,
         viewCount: this.existingWord.viewCount,

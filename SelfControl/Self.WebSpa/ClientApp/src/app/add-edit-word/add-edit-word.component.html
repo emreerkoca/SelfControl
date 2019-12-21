@@ -1,8 +1,8 @@
 <h1>{{actionType}} Word</h1>
 <form [formGroup]="form" (ngSubmit)="addOrUpdateWord()" #formDir="ngForm" novalidate>
   <div class="form-group row">
-    <label class=" control-label col-md-12">Original Word</label>
-    <div class="col-md-12">
+    <label class=" control-label col-md-3">Original Word</label>
+    <div class="col-md-3">
       <input class="form-control" type="text" formControlName="originalWord">
     </div>
     <span class="text-danger ml-3" *ngIf="originalWord.invalid && formDir.submitted">
@@ -10,8 +10,8 @@
     </span>
   </div>
   <div class="form-group row">
-    <label class=" control-label col-md-12">Translated Word</label>
-    <div class="col-md-12">
+    <label class=" control-label col-md-3">Translated Word</label>
+    <div class="col-md-3">
       <input class="form-control" type="text" formControlName="translatedWord">
     </div>
     <span class="text-danger ml-3" *ngIf="translatedWord.invalid && formDir.submitted">
@@ -19,8 +19,17 @@
     </span>
   </div>
   <div class="form-group row">
-    <label class="control-label col-md-12" for="sentence">Sentence</label>
-    <div class="col-md-12">
+    <label class="control-label col-md-3" for="englishMeaning">English Meaning</label>
+    <div class="col-md-3">
+      <textarea class="form-control" rows="3" formControlName="englishMeaning"></textarea>
+    </div>
+    <span class="text-danger ml-3" *ngIf="sentence.invalid && formDir.submitted">
+      English meaning is required.
+    </span>
+  </div>
+  <div class="form-group row">
+    <label class="control-label col-md-3" for="sentence">Sentence</label>
+    <div class="col-md-3">
       <textarea class="form-control" rows="3" formControlName="sentence"></textarea>
     </div>
     <span class="text-danger ml-3" *ngIf="sentence.invalid && formDir.submitted">

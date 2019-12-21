@@ -20,9 +20,16 @@ namespace Self.Core.Entities
         [MaxLength(50, ErrorMessage = "Word character limit can' t exceed 50")]
         public string TranslatedWord { get; set; }
 
-        public int ViewCount { get; set; }
+        [Display(Name = "Translated Word:")]
+        [Required]
+        [MaxLength(140, ErrorMessage = "Word meaning character limit can' t exceed 50")]
+        public string EnglishMeaning { get; set; }
 
+        [Required]
+        [MaxLength(140, ErrorMessage = "Sentence character limit can' t exceed 50")]
         public string Sentence { get; set; }
+
+        public int ViewCount { get; set; }
 
         [Required]
         public string OwnerId { get; set; }
