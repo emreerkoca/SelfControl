@@ -47,8 +47,9 @@ export class WordService {
         );
   }
 
-  updateWord(word: Word) {
-    return this.httpClient.put<Word>(this.wordApiUrl + 'UpdateWord', JSON.stringify(word))
+    updateWord(word: Word) {
+        return this.httpClient.put<Word>
+            (this.wordApiUrl + 'UpdateWord/' + word.id, JSON.stringify(word), this.httpOptions)
       .pipe(
         retry(1),
         catchError(this.errorHandler)

@@ -66,9 +66,19 @@ namespace Self.WebSpa.Controllers
         #endregion
 
         #region Update Word   
-        [HttpPut("UpdateWord")]
-        public async Task<IActionResult> UpdateWord(Word updatedWord)
+        [HttpPut("UpdateWord/{wordId}")]
+        public async Task<IActionResult> UpdateWord([FromRoute] int wordId, [FromBody] Word updatedWord)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (wordId != updatedWord.Id)
+            {
+                return BadRequest();
+            }
+
             var result = await _wordRepository.UpdateAsync(updatedWord);
 
             if (!result)

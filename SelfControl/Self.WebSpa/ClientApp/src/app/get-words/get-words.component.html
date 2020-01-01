@@ -10,6 +10,7 @@
     <tr>
       <th>#</th>
       <th>Original</th>
+      <th>Meaning</th>
       <th>Translated</th>
       <th>Sentence</th>
     </tr>
@@ -18,6 +19,7 @@
     <tr *ngFor="let word of (words | async)">
       <td>{{ word.id }}</td>
       <td>{{ word.originalWord }}</td>
+      <td>{{ word.englishMeaning }}</td>
       <td>{{ word.translatedWord }}</td>
       <td>{{ word.sentence }}</td>
       <td><a [routerLink]="['/edit-word/', word.id]" class="btn btn-primary btn-sm float-right">Edit</a></td>
