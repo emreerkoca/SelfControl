@@ -9,18 +9,15 @@ namespace Self.Core.Entities
     [Table("Word")]
     public class Word : BaseEntity
     {
-        [Display(Name = "Original Word:")]
         [Required]
         [MaxLength(50, ErrorMessage = "Word character limit can' t exceed 50")]
         public string OriginalWord { get; set; }
 
 
-        [Display(Name = "Translated Word:")]
         [Required]
         [MaxLength(50, ErrorMessage = "Word character limit can' t exceed 50")]
         public string TranslatedWord { get; set; }
 
-        [Display(Name = "Translated Word:")]
         [Required]
         [MaxLength(140, ErrorMessage = "Word meaning character limit can' t exceed 50")]
         public string EnglishMeaning { get; set; }

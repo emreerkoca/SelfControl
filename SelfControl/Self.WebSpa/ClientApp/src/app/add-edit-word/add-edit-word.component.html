@@ -10,21 +10,21 @@
     </span>
   </div>
   <div class="form-group row">
-    <label class=" control-label col-md-3">Translated Word</label>
-    <div class="col-md-3">
-      <input class="form-control" type="text" formControlName="translatedWord">
-    </div>
-    <span class="text-danger ml-3" *ngIf="translatedWord.invalid && formDir.submitted">
-      Translated word is required.
-    </span>
-  </div>
-  <div class="form-group row">
     <label class="control-label col-md-3" for="englishMeaning">English Meaning</label>
     <div class="col-md-3">
       <textarea class="form-control" rows="3" formControlName="englishMeaning"></textarea>
     </div>
     <span class="text-danger ml-3" *ngIf="sentence.invalid && formDir.submitted">
       English meaning is required.
+    </span>
+  </div>
+  <div class="form-group row">
+    <label class=" control-label col-md-3">Translated Word</label>
+    <div class="col-md-3">
+      <input class="form-control" type="text" formControlName="translatedWord">
+    </div>
+    <span class="text-danger ml-3" *ngIf="translatedWord.invalid && formDir.submitted">
+      Translated word is required.
     </span>
   </div>
   <div class="form-group row">
@@ -37,7 +37,7 @@
     </span>
   </div>
   <div class="form-group">
-    <button type="submit" class="btn btn-success float-right">Save</button>
-    <button class="btn btn-secondary float-left" (click)="cancel()">Cancel</button>
+    <button class="btn btn-secondary float-left btn-cancel" (click)="cancel()">Cancel</button>
+    <button type="submit" class="btn btn-success btn-save">Save</button>
   </div>
 </form>
