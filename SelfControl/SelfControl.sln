@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Self.Infrastructure", "Self
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Self.Web", "Self.Web\Self.Web.csproj", "{F109ACDB-B494-4397-9113-B36E2A948B94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Self.WebSpa", "Self.WebSpa\Self.WebSpa.csproj", "{A211596D-E0CF-4B00-8539-BCF72DE4D49D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Self.WebSpa", "Self.WebSpa\Self.WebSpa.csproj", "{A211596D-E0CF-4B00-8539-BCF72DE4D49D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Self.WebSpaReact", "Self.WebSpaReact\Self.WebSpaReact.csproj", "{AA0511DD-B407-4760-BAA9-03A76F23519C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,10 @@ Global
 		{A211596D-E0CF-4B00-8539-BCF72DE4D49D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A211596D-E0CF-4B00-8539-BCF72DE4D49D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A211596D-E0CF-4B00-8539-BCF72DE4D49D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA0511DD-B407-4760-BAA9-03A76F23519C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA0511DD-B407-4760-BAA9-03A76F23519C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA0511DD-B407-4760-BAA9-03A76F23519C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA0511DD-B407-4760-BAA9-03A76F23519C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +59,7 @@ Global
 		{BA866CC2-5BC2-4F49-94C2-89E18B4A74E5} = {C4973A28-687F-4517-AE4D-C111E6BBFA81}
 		{F109ACDB-B494-4397-9113-B36E2A948B94} = {C4973A28-687F-4517-AE4D-C111E6BBFA81}
 		{A211596D-E0CF-4B00-8539-BCF72DE4D49D} = {C4973A28-687F-4517-AE4D-C111E6BBFA81}
+		{AA0511DD-B407-4760-BAA9-03A76F23519C} = {C4973A28-687F-4517-AE4D-C111E6BBFA81}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BB16B4F8-FAA4-4F1F-BC35-BDDC8DD3BC24}
