@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-export class FetchData extends Component {
-  static displayName = FetchData.name;
+export class GetWords extends Component {
+  static displayName = GetWords.name;
 
   constructor(props) {
     super(props);
@@ -13,8 +13,6 @@ export class FetchData extends Component {
   }
 
   static renderForecastsTable(words) {
-    console.log(words);
-
     return (
       <table className='table table-striped' aria-labelledby="tabelLabel">
         <thead>
@@ -27,8 +25,8 @@ export class FetchData extends Component {
         <tbody>
           {words.map(word =>
             <tr key={word.id}>
-              <td>{word.originalWord}</td>
-              <td>{word.englishMeaning}</td>
+              <td>{word.vocable}</td>
+              <td>{word.meaning}</td>
               <td>{word.sentence}</td>
             </tr>
           )}
@@ -40,11 +38,11 @@ export class FetchData extends Component {
   render() {
     let contents = this.state.loading
       ? <p><em>Loading...</em></p>
-      : FetchData.renderForecastsTable(this.state.words);
+      : GetWords.renderForecastsTable(this.state.words);
 
     return (
       <div>
-        <h1 id="tabelLabel" >Sample Words</h1>
+        <h1 id="tabelLabel" >Your Vocabulary</h1>
         {contents}
       </div>
     );
