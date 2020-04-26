@@ -28,8 +28,8 @@ namespace Self.Infrastructure.Data
 
         public async Task<T> AddAsync(T entity)
         {
-            _appDbContext.Set<T>().Add(entity);
-            await _appDbContext.SaveChangesAsync();
+            await _appDbContext.Set<T>().AddAsync(entity);
+            //await _appDbContext.SaveChangesAsync();
 
             return  entity;
         }

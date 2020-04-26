@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Self.Core.Interfaces;
 using Self.Infrastructure.Data;
+using Self.Service;
 using System;
 
 namespace Self.WebSpaReact
@@ -38,7 +39,8 @@ namespace Self.WebSpaReact
                    options.UseSqlServer(Configuration.GetConnectionString("SelfConnection")));
             }
 
-            services.AddScoped<IWordRepository, WordRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IWordService, WordService>();
 
             services.AddCors(options =>
             {

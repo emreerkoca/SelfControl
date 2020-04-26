@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Self.Core.Entities;
 using Self.Core.Interfaces;
+using Self.Service;
 
 namespace Self.WebSpaReact.Controllers
 {
@@ -14,13 +15,13 @@ namespace Self.WebSpaReact.Controllers
     public class WordController : ControllerBase
     {
         #region Fields
-        IWordRepository _wordRepository;
+        IWordService _wordService;
         #endregion
 
         #region CTOR
-        public WordController(IWordRepository wordRepository)
+        public WordController(IWordService wordService)
         {
-            _wordRepository = wordRepository;
+            _wordService = wordService;
         }
         #endregion
 
@@ -29,7 +30,7 @@ namespace Self.WebSpaReact.Controllers
         [HttpGet("get-word/{wordId}")]
         public async Task<IActionResult> GetWordById(int wordId)
         {
-            Word word = await _wordRepository.GetByIdAsync(wordId);
+            Word word = await _wordService.GetWordById(wordId);
 
             return Ok(word);
         }
@@ -39,7 +40,7 @@ namespace Self.WebSpaReact.Controllers
         [HttpPost("add-word")]
         public async Task<IActionResult> AddWord([FromBody] Word newWord)
         {
-            var result = await _wordRepository.AddAsync(newWord);
+            var result = _wordService.AddWord(newWord);
 
             if (result == null)
             {
@@ -54,7 +55,7 @@ namespace Self.WebSpaReact.Controllers
         [HttpGet("get-words")]
         public async Task<IActionResult> GetWords()
         {
-            IReadOnlyList<Word> wordList = await _wordRepository.GetListAllAsync();
+            IReadOnlyList<Word> wordList = await _wordService.GetWords();
 
             if (wordList == null)
             {
@@ -79,12 +80,7 @@ namespace Self.WebSpaReact.Controllers
                 return BadRequest();
             }
 
-            var result = await _wordRepository.UpdateAsync(updatedWord);
-
-            if (!result)
-            {
-                return BadRequest("Could not update word.");
-            }
+            _wordService.UpdateWord(updatedWord);
 
             return Ok(updatedWord);
         }
@@ -94,14 +90,9 @@ namespace Self.WebSpaReact.Controllers
         [HttpDelete("delete-word")]
         public async Task<IActionResult> DeleteWord(int wordId)
         {
-            Word deletedWord = await _wordRepository.GetByIdAsync(wordId);
+            Word deletedWord = await _wordService.GetWordById(wordId);
 
-            var result = await _wordRepository.DeleteAsync(deletedWord);
-
-            if (!result)
-            {
-                return BadRequest("Could not delete word.");
-            }
+            await _wordService.DeleteWord(deletedWord);
 
             return Ok();
         }

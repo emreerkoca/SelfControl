@@ -27,6 +27,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Self.Core\Self.Core.csproj" />
     <ProjectReference Include="..\Self.Infrastructure\Self.Infrastructure.csproj" />
+    <ProjectReference Include="..\Self.Service\Self.Service.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
