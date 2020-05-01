@@ -7,7 +7,8 @@ namespace Self.Core.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {
-        IWordRepository Words { get; }
         Task<int> CommitAsync();
+
+        IWordRepository WordRepository { get; }
     }
 }

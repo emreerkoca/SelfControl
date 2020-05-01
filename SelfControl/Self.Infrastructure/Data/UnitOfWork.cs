@@ -9,17 +9,16 @@ namespace Self.Infrastructure.Data
     public class UnitOfWork : IUnitOfWork
     {
         private readonly AppDbContext _appDbContext;
-        private WordRepository _wordRepository;
+        private IWordRepository _wordRepository;
         public UnitOfWork(AppDbContext appDbContext)
         {
-            this._appDbContext = appDbContext;
-
-            Words = new WordRepository(_appDbContext);
+            _appDbContext = appDbContext;
         }
 
-        //public IWordRepository Words => _wordRepository ??= new WordRepository(_appDbContext);
-        public IWordRepository Words { get; private set; }
-
+        public IWordRepository WordRepository
+        {
+            get { return _wordRepository = _wordRepository ?? new WordRepository(this._appDbContext); }
+        }
         public async Task<int> CommitAsync()
         {
             return await _appDbContext.SaveChangesAsync();

@@ -19,17 +19,17 @@ namespace Self.Infrastructure.Data
 
         public Word GetRandomWord()
         {
-            return AppDbContext.Word.OrderBy(r => Guid.NewGuid()).Skip(2).Take(1).First();
+            return _appDbContext.Word.OrderBy(r => Guid.NewGuid()).Skip(2).Take(1).First();
         }
 
         public Task<Word> GetRandomWordAsync()
         {
-            return AppDbContext.Word.OrderBy(r => Guid.NewGuid()).Skip(2).Take(1).FirstAsync();
+            return _appDbContext.Word.OrderBy(r => Guid.NewGuid()).Skip(2).Take(1).FirstAsync();
         }
 
         public async Task<IReadOnlyList<Word>> GetListByUserAsync(string userName)
         {
-            return await AppDbContext.Word.Where(x => x.OwnerId == userName).ToListAsync();
+            return await _appDbContext.Word.Where(x => x.OwnerId == userName).ToListAsync();
         }
 
         public async Task ExportToFileAsync(string filePath, IReadOnlyList<Word> words)
@@ -40,7 +40,5 @@ namespace Self.Infrastructure.Data
             csvWriter.WriteRecords(words);
             textWriter.Close();
         }
-
-        private AppDbContext AppDbContext { get { return _appDbContext as AppDbContext; } }
     }
 }
