@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Self.Infrastructure.Data
 {
-    public class AppDbContext : IdentityDbContext<ApplicationUser>
+    public class AppDbContext : DbContext
     {
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
@@ -17,6 +17,7 @@ namespace Self.Infrastructure.Data
 
         }
 
+        public DbSet<User> User { get; set; }
         public DbSet<Word> Word { get; set; }
         public DbSet<Notification> Notification { get; set; }
     }
