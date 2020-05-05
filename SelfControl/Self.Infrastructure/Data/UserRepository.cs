@@ -18,8 +18,8 @@ namespace Self.Infrastructure.Data
     public class UserRepository : IUserRepository
     {
         private readonly AppDbContext _appDbContext;
-        public IConfiguration Configuration { get; }
 
+        public IConfiguration Configuration { get; }
 
         public UserRepository(AppDbContext appDbContext, IConfiguration configuration)
         {
@@ -27,7 +27,7 @@ namespace Self.Infrastructure.Data
             Configuration = configuration;
         }
 
-        public async Task<User> AddNewUserAsync(User user)
+        public User AddNewUser(User user)
         {
             var existingUsers = _appDbContext.User.FirstOrDefault(x => x.UserName == user.UserName);
 
@@ -44,8 +44,6 @@ namespace Self.Infrastructure.Data
             user.Password = authenticationData.HashedPassword;
 
             _appDbContext.User.Add(user);
-
-            await _appDbContext.SaveChangesAsync();
 
             return user;
         }

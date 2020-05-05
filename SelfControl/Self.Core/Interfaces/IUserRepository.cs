@@ -8,7 +8,7 @@ namespace Self.Core.Interfaces
 {
     public interface IUserRepository
     {
-        Task<User> AddNewUserAsync(User user);
+        User AddNewUser(User user);
         User Authenticate(string username, string password);
     }
 }

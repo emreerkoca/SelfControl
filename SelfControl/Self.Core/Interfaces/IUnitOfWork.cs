@@ -10,5 +10,6 @@ namespace Self.Core.Interfaces
         Task<int> CommitAsync();
 
         IWordRepository WordRepository { get; }
+        IUserRepository UserRepository { get; }
     }
 }
