@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Self.Core.Interfaces;
+using Self.Infrastructure.Helper;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,13 +12,13 @@ namespace Self.Infrastructure.Data
     public class UnitOfWork : IUnitOfWork
     {
         private readonly AppDbContext _appDbContext;
-        public IConfiguration _configuration { get; }
+        private readonly IOptions<AppSettings>_appSettings;
         private IWordRepository _wordRepository;
         private IUserRepository _userRepository;
-        public UnitOfWork(AppDbContext appDbContext, IConfiguration configuration)
+        public UnitOfWork(AppDbContext appDbContext, IOptions<AppSettings> appSettings)
         {
             _appDbContext = appDbContext;
-            _configuration = configuration;
+            _appSettings = appSettings;
 
         }
 
@@ -27,7 +29,7 @@ namespace Self.Infrastructure.Data
 
         public IUserRepository UserRepository
         {
-            get { return _userRepository = _userRepository ?? new UserRepository(this._appDbContext, this._configuration); }
+            get { return _userRepository = _userRepository ?? new UserRepository(this._appDbContext, this._appSettings); }
         }
 
         public async Task<int> CommitAsync()

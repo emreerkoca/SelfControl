@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Self.Core.Entities;
 using Self.Core.Interfaces;
@@ -18,13 +19,12 @@ namespace Self.Infrastructure.Data
     public class UserRepository : IUserRepository
     {
         private readonly AppDbContext _appDbContext;
+        private readonly AppSettings _appSettings;
 
-        public IConfiguration Configuration { get; }
-
-        public UserRepository(AppDbContext appDbContext, IConfiguration configuration)
+        public UserRepository(AppDbContext appDbContext, IOptions<AppSettings> appSettings)
         {
             _appDbContext = appDbContext;
-            Configuration = configuration;
+            _appSettings = appSettings.Value;
         }
 
         public User AddNewUser(User user)
@@ -60,7 +60,7 @@ namespace Self.Infrastructure.Data
             }
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(Configuration.GetValue<string>("AuthorityManagement:Secret"));
+            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[] {
