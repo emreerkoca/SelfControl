@@ -29,7 +29,7 @@ namespace Self.Infrastructure.Data
 
         public User AddNewUser(User user)
         {
-            var existingUsers = _appDbContext.User.FirstOrDefault(x => x.UserName == user.UserName);
+            var existingUsers = _appDbContext.User.FirstOrDefault(x => x.EMail == user.EMail);
 
             if (existingUsers != null)
             {
@@ -50,9 +50,9 @@ namespace Self.Infrastructure.Data
 
         public User Authenticate(string username, string password)
         {
-            var salt = _appDbContext.User.FirstOrDefault(x => x.UserName == username).Salt;
+            var salt = _appDbContext.User.FirstOrDefault(x => x.EMail == username).Salt;
             var hashedPassword = GetSaltedAndHashedPassword(salt, password);
-            var user = _appDbContext.User.SingleOrDefault(x => x.UserName == username && x.Password == hashedPassword);
+            var user = _appDbContext.User.SingleOrDefault(x => x.EMail == username && x.Password == hashedPassword);
 
             if (user == null)
             {

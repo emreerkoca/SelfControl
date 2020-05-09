@@ -32,13 +32,13 @@ namespace Self.Infrastructure.Data
             return await _appDbContext.Word.Where(x => x.OwnerId == userName).ToListAsync();
         }
 
-        public async Task ExportToFileAsync(string filePath, IReadOnlyList<Word> words)
-        {
-            TextWriter textWriter = new StreamWriter(File.Open(filePath, FileMode.Create), Encoding.UTF8);
-            var csvWriter = new CsvWriter(textWriter);
+        //public async Task ExportToFileAsync(string filePath, IReadOnlyList<Word> words)
+        //{
+        //    TextWriter textWriter = new StreamWriter(File.Open(filePath, FileMode.Create), Encoding.UTF8);
+        //    var csvWriter = new CsvWriter(textWriter);
 
-            csvWriter.WriteRecords(words);
-            textWriter.Close();
-        }
+        //    csvWriter.WriteRecords(words);
+        //    textWriter.Close();
+        //}
     }
 }

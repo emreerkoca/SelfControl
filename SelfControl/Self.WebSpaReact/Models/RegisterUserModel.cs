@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Self.Core.Entities
+namespace Self.WebSpaReact.Models
 {
-    public class User : BaseEntity
+    public class RegisterUserModel
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string EMail { get; set; }
         public string Password { get; set; }
-        public string Salt { get; set; }
-        public string Token { get; set; }
     }
 }

@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -44,6 +45,8 @@ namespace Self.WebSpaReact
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IWordService, WordService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
 
             services.AddCors(options =>
             {
@@ -58,6 +61,8 @@ namespace Self.WebSpaReact
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
+            services.AddAutoMapper(typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
