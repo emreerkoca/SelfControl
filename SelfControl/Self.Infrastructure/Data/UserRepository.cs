@@ -50,8 +50,15 @@ namespace Self.Infrastructure.Data
 
         public User Authenticate(string username, string password)
         {
-            var salt = _appDbContext.User.FirstOrDefault(x => x.EMail == username).Salt;
-            var hashedPassword = GetSaltedAndHashedPassword(salt, password);
+            var userForSalt = _appDbContext.User.FirstOrDefault(x => x.EMail == username);
+
+            if (userForSalt == null)
+            {
+                return null;
+            }
+
+            //var salt = _appDbContext.User.FirstOrDefault(x => x.EMail == username);
+            var hashedPassword = GetSaltedAndHashedPassword(userForSalt.Salt, password);
             var user = _appDbContext.User.SingleOrDefault(x => x.EMail == username && x.Password == hashedPassword);
 
             if (user == null)
