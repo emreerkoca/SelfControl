@@ -1,15 +1,33 @@
 import React, { Component } from 'react';
 
+import WordService from '../services/word.service';
+
 export class GetWords extends Component {
   static displayName = GetWords.name;
 
   constructor(props) {
     super(props);
-    this.state = { words: [], loading: true };
+    this.state = { words: [], loading: true, message: '' };
   }
 
   componentDidMount() {
-    this.getWords();
+    WordService.getWords().then((response) => {
+      this.setState({ words: response, loading: false });
+    },
+    error => { 
+      const responseMessage =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString(); 
+
+      this.setState({
+        loading: false,
+        message: responseMessage
+      });
+    }
+    );
   }
 
   static renderForecastsTable(words) {
@@ -46,11 +64,5 @@ export class GetWords extends Component {
         {contents}
       </div>
     );
-  }
-
-  async getWords() {
-    const response = await fetch('word/get-words');
-    const data = await response.json();
-    this.setState({ words: data, loading: false });
   }
 }
