@@ -16,15 +16,15 @@ const required = value => {
     }
 };
 
-// const email = value => {
-//     if (!isEmail(value)) {
-//         return (
-//             <div className="alert alert-danger" role="alert">
-//                 This email is not a valid.
-//             </div>
-//         );
-//     }
-// }
+const emailValidation = value => {
+    if (!isEmail(value)) {
+        return (
+            <div className="alert alert-danger" role="alert">
+                This email is not a valid.
+            </div>
+        );
+    }
+}
 
 export class Login extends Component {
     constructor(props) {
@@ -113,7 +113,7 @@ export class Login extends Component {
                 name="email"
                 value={this.state.email}
                 onChange={this.onChangeEMail}
-                validations={[required]}
+                validations={[required, emailValidation]}
               />
             </div>
 

@@ -57,7 +57,6 @@ namespace Self.Infrastructure.Data
                 return null;
             }
 
-            //var salt = _appDbContext.User.FirstOrDefault(x => x.EMail == username);
             var hashedPassword = GetSaltedAndHashedPassword(userForSalt.Salt, password);
             var user = _appDbContext.User.SingleOrDefault(x => x.EMail == username && x.Password == hashedPassword);
 
