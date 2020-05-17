@@ -5,6 +5,7 @@ import CheckButton from "react-validation/build/button";
 
 import { isEmail } from "validator";
 import AuthService from "../services/auth.service"; 
+import NavMenu from "./NavMenu";
 
 const required = value => {
     if (!value) {
@@ -65,7 +66,8 @@ export class Login extends Component {
             if (this.checkBtn.context._errors.length === 0) {
               AuthService.login(this.state.email, this.state.password).then(
                 () => {
-                  this.props.history.push("/profile");
+                  this.props.history.push("/");
+
                   window.location.reload();
                 },
                 error => {

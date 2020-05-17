@@ -46,6 +46,10 @@ class AuthService {
     logout() {
       localStorage.removeItem("user-token");
     }
+
+    checkAuthentication() {
+      return JSON.parse(localStorage.getItem('user-token'));;
+    }
 }
 
 export default new AuthService();
