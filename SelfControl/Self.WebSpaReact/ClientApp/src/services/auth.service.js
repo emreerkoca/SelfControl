@@ -35,7 +35,12 @@ class AuthService {
           .then(handleResponse)
           .then(
               (result) => {
-              localStorage.setItem("user-token", JSON.stringify(result.token));
+                var userInfo = {
+                  userId: result.id,
+                  token: result.token
+                };
+
+                localStorage.setItem("user-info", JSON.stringify(userInfo));
             },
             (error) => {
               console.log(error);
@@ -44,11 +49,11 @@ class AuthService {
     }
 
     logout() {
-      localStorage.removeItem("user-token");
+      localStorage.removeItem("user-info");
     }
 
     checkAuthentication() {
-      return JSON.parse(localStorage.getItem('user-token'));;
+      return JSON.parse(localStorage.getItem('user-info') || '{}').token;
     }
 }
 

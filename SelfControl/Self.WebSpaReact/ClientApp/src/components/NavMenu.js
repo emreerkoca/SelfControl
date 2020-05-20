@@ -36,10 +36,6 @@ export class NavMenu extends Component {
     return AuthService.checkAuthentication();
   }
 
-  loginClick() {
-    
-  }
-
   toggleNavbar () {
     this.setState({
       collapsed: !this.state.collapsed
