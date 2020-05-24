@@ -5,7 +5,6 @@ import CheckButton from "react-validation/build/button";
 
 import { isEmail } from "validator";
 import AuthService from "../services/auth.service"; 
-import NavMenu from "./NavMenu";
 
 const required = value => {
     if (!value) {
@@ -40,7 +39,17 @@ export class Login extends Component {
             loading: false,
             message: ""
         };
+
+        this.handleSuccessfulAuth = this.handleSuccessfulAuth.bind(this);
     }
+
+    handleSuccessfulAuth(data) {
+      if (data) {
+        this.props.handleLogin(data);
+        this.props.history.push('/userboard');
+      }
+    }
+
         onChangeEMail(e) {
             this.setState({
               email: e.target.value
@@ -66,9 +75,9 @@ export class Login extends Component {
             if (this.checkBtn.context._errors.length === 0) {
               AuthService.login(this.state.email, this.state.password).then(
                 () => {
-                  this.props.history.push("/");
+                  var userData = AuthService.checkAuthentication();
 
-                  window.location.reload();
+                  this.handleSuccessfulAuth(userData);
                 },
                 error => {
                   const resMessage =

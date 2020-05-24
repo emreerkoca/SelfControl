@@ -100,28 +100,23 @@ export class Register extends Component {
 
             AuthService.signup(user).then(
                 response => {
-                    console.log("response::--");
-                    console.log(response);
-                    // this.setState({
-                    //     message: response,
-                    //     successful: true
-                    // });
+                    this.setState({
+                        message: response,
+                        successful: true
+                    });
                 },
                 error => {
-                    // const responseMessage =
-                    // (error.response &&
-                    //   error.response.data &&
-                    //   error.response.data.message) ||
-                    // error.message ||
-                    // error.toString();
-        
-                    console.log("error::--");
-                    console.log(error);
+                    const responseMessage =
+                    (error.response &&
+                      error.response.data &&
+                      error.response.data.message) ||
+                    error.message ||
+                    error.toString(); 
 
-                    // this.setState({
-                    //     successful: false,
-                    //     message: error
-                    // });
+                    this.setState({
+                        successful: false,
+                        message: error
+                    });
                 }
             );
         }

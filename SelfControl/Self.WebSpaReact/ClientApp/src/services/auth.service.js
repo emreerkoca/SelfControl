@@ -46,7 +46,7 @@ class AuthService {
               console.log(error);
             }
           )
-    }
+   }
 
     logout() {
       localStorage.removeItem("user-info");
