@@ -6,6 +6,7 @@ import { Home } from './components/Home';
 import { GetWords } from './components/GetWords';
 import { AddWord } from './components/AddWord';
 import { Login } from './components/Login';
+import { LogOut } from './components/LogOut';
 import { Register } from './components/Register';
 import { UserBoard } from './components/UserBoard';
 import AuthService from './services/auth.service';
@@ -65,10 +66,7 @@ export default class App extends Component {
               />
             )}
           />
-      <Route path='/add-word' component={AddWord} />
-      <Route path='/get-words' component={GetWords} />
       <Route path="/register" component={Register} />
-      <Route path="userboard" component={UserBoard} />
     </PublicLayout>;
     
     if (this.state.isAuthenticated) {
@@ -76,6 +74,16 @@ export default class App extends Component {
       <Route path='/add-word' component={AddWord} />
       <Route path='/get-words' component={GetWords} />
       <Route path="userboard" component={UserBoard} />
+      <Route
+            exact
+            path={"/logout"}
+            render={props => (
+              <LogOut
+                {...props}
+                handleLogout={this.handleLogout}
+              />
+            )}
+          />
     </PrivateLayout>;
     }
      

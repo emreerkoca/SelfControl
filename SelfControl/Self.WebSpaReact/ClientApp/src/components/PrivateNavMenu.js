@@ -23,9 +23,9 @@ export class PrivateNavMenu extends Component {
     });
   }
 
-  logOut() {
-    AuthService.logout();
-  }
+  // logOut() {
+  //   AuthService.logout();
+  // }
 
   render () {
     return (
@@ -48,7 +48,7 @@ export class PrivateNavMenu extends Component {
                 }
                 {
                   <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/" onClick={this.logOut}>Logout</NavLink>
+                  <NavLink tag={Link} className="text-dark" to="/logout">LogOut</NavLink>
                   </NavItem>
                 }
               </ul>
