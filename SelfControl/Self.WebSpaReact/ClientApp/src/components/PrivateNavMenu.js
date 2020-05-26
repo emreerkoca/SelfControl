@@ -3,7 +3,7 @@ import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLi
 import { Link } from 'react-router-dom';
 import './NavMenu.css';
 
-import AuthService from '../services/auth.service';
+import AuthService from '../services/AuthService';
 
 export class PrivateNavMenu extends Component {
   static displayName = PrivateNavMenu.name;

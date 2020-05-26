@@ -9,7 +9,7 @@ import { Login } from './components/Login';
 import { LogOut } from './components/LogOut';
 import { Register } from './components/Register';
 import { UserBoard } from './components/UserBoard';
-import AuthService from './services/auth.service';
+import AuthService from './services/AuthService';
 
 import './custom.css';
 import 'bootstrap/dist/css/bootstrap.min.css';

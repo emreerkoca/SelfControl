@@ -1,4 +1,4 @@
-import authHeader from './auth-header';
+import authHeader from './AuthHeader';
 
 class WordService {
     async getWords() {

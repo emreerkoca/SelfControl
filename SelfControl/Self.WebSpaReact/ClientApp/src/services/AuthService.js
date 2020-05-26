@@ -1,4 +1,5 @@
 import { handleResponse } from '../helpers/handleResponse';
+import authHeader from './AuthHeader';
 
 const API_URL = "https://localhost:44364/user/";
 

@@ -72,7 +72,5 @@ namespace Self.WebSpaReact.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
-
-
     }
 }

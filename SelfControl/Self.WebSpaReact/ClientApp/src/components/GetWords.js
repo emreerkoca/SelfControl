@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import WordService from '../services/word.service';
+import WordService from '../services/WordService';
 
 export class GetWords extends Component {
   static displayName = GetWords.name;
