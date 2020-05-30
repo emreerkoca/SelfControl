@@ -40,10 +40,12 @@ export default class App extends Component {
     this.checkAuthentication();
   }
 
-  handleLogout() { 
+  handleLogout() {
     this.setState({
       isAuthenticated: false,
     });
+
+    AuthService.logout();
   }
 
   handleLogin(data) { 

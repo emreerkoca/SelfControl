@@ -8,6 +8,6 @@ export class LogOut extends Component {
     }
 
     render() {
-        return null
+        return null;
     }
 }
