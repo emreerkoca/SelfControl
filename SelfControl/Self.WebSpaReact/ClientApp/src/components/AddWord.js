@@ -31,7 +31,7 @@ export class AddWord extends Component {
     }
 
     handleSubmit(e) {
-        console.log(JSON.stringify(this.state));
+        //console.log(JSON.stringify(this.state));
     e.preventDefault();
     fetch('/word/add-word', { 
       method: 'POST', 

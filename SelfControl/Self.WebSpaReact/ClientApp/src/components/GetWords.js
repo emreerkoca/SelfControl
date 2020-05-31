@@ -1,36 +1,42 @@
 import React, { Component } from 'react';
-
-import WordService from '../services/WordService';
+import authHeader from '../services/AuthHeader';
+import { handleResponse } from '../helpers/handleResponse';
 
 export class GetWords extends Component {
   static displayName = GetWords.name;
+ 
 
   constructor(props) {
     super(props);
-    this.state = { words: [], loading: true, message: '' };
+    this.state = { error: null, isLoaded: false, words: [] };
   }
-
+  
   componentDidMount() {
-    WordService.getWords().then((response) => {
-      this.setState({ words: response, loading: false });
-    },
-    error => { 
-      const responseMessage =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString(); 
+    const requestOptions = {
+      method: 'GET',
+      headers: authHeader() 
+    };
+  
+    fetch('word/get-words', requestOptions)
+      .then(handleResponse)
+      .then(
+          (result) => {
+            this.setState({
+              isLoaded: true,
+              words: result
+            });
+        },
+        (error) => {
+            this.setState({
+              isLoaded: true,
+              error
+            });
+        }
+      );
 
-      this.setState({
-        loading: false,
-        message: responseMessage
-      });
-    }
-    );
   }
 
-  static renderForecastsTable(words) {
+  static renderWordsTable(words) {
     return (
       <table className='table table-striped' aria-labelledby="tabelLabel">
         <thead>
@@ -54,15 +60,18 @@ export class GetWords extends Component {
   }
 
   render() {
-    let contents = this.state.loading
-      ? <p><em>Loading...</em></p>
-      : GetWords.renderForecastsTable(this.state.words);
+    const { error, isLoaded, words } = this.state;  
 
-    return (
-      <div>
-        <h1 id="tabelLabel" >Your Vocabulary</h1>
-        {contents}
-      </div>
-    );
+    if (error) {
+      return <div>Error: {error.message}</div>;
+    } else if (!isLoaded) {
+      return <div>Loading...</div>;
+    } else { 
+      return (
+        <div>
+          { GetWords.renderWordsTable(words) }
+        </div>
+      );
+    }
   }
 }
