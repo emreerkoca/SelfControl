@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
+import authHeader from '../services/AuthHeader';
+import { handleResponse } from '../helpers/handleResponse';
 
 export class AddWord extends Component {
     constructor(props) {
@@ -8,7 +10,7 @@ export class AddWord extends Component {
         vocable: '',
         meaning: '',
         sentence: '',
-        ownerId: 'test@sampledomain.com',
+        ownerId: JSON.parse(localStorage.getItem('user-info') || '{}').userId,
         viewCount: 0
       };
 
@@ -30,21 +32,34 @@ export class AddWord extends Component {
       this.setState({sentence: e.target.value});
     }
 
+   static clearForm ()  {
+      document.querySelector('#word').value = '';
+      document.querySelector('#meaning').value = '';
+      document.querySelector('#example').value = '';
+    }
+
     handleSubmit(e) {
-        //console.log(JSON.stringify(this.state));
-    e.preventDefault();
-    fetch('/word/add-word', { 
-      method: 'POST', 
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(this.state)
-    }).then(response => {
-      console.log(response);
-      return response.json();
-    })
-    .catch(err => console.log);
+      e.preventDefault();
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Authorization': authHeader(),
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(this.state)
+      };
+
+      fetch('/word/add-word', requestOptions)
+        .then(handleResponse)
+        .then(
+            (result) => {
+              AddWord.clearForm();
+          },
+          (error) => {
+              console.log(error);
+          }
+        );
   }
 
   

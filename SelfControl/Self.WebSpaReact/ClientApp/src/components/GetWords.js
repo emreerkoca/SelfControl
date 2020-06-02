@@ -14,10 +14,13 @@ export class GetWords extends Component {
   componentDidMount() {
     const requestOptions = {
       method: 'GET',
-      headers: authHeader() 
+      headers: {
+        'Authorization': authHeader()
+
+      }
     };
   
-    fetch('word/get-words', requestOptions)
+    fetch('word/get-words?userId=' + JSON.parse(localStorage.getItem('user-info') || '{}').userId, requestOptions)
       .then(handleResponse)
       .then(
           (result) => {

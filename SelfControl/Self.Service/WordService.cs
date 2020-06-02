@@ -44,14 +44,15 @@ namespace Self.Service
             return await _unitOfWork.WordRepository.GetByIdAsync(id);
         }
 
-        public async Task<IReadOnlyList<Word>> GetWords()
+        public async Task<IReadOnlyList<Word>> GetWords(int userId)
         {
-            return await _unitOfWork.WordRepository.GetListAllAsync();
+            return await _unitOfWork.WordRepository.GetListByUserAsync(userId);
         }
 
         public async Task UpdateWord(Word word)
         {
             _unitOfWork.WordRepository.Update(word);
+
             await _unitOfWork.CommitAsync();
         }
     }

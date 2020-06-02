@@ -10,7 +10,7 @@ namespace Self.Core.Interfaces
     {
         Word GetRandomWord();
         Task<Word> GetRandomWordAsync();
-        Task<IReadOnlyList<Word>> GetListByUserAsync(string userName);
+        Task<IReadOnlyList<Word>> GetListByUserAsync(int userId);
         //Task ExportToFileAsync(string filePath, IReadOnlyList<Word> words);
     }
 }
