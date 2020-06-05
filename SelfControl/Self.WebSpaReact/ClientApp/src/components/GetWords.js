@@ -16,7 +16,6 @@ export class GetWords extends Component {
       method: 'GET',
       headers: {
         'Authorization': authHeader()
-
       }
     };
   
@@ -36,7 +35,6 @@ export class GetWords extends Component {
             });
         }
       );
-
   }
 
   static renderWordsTable(words) {
@@ -47,6 +45,7 @@ export class GetWords extends Component {
             <th>Word</th>
             <th>Meaning</th>
             <th>Example</th>
+            <th>Operations</th>
           </tr>
         </thead>
         <tbody>
@@ -55,11 +54,26 @@ export class GetWords extends Component {
               <td>{word.vocable}</td>
               <td>{word.meaning}</td>
               <td>{word.sentence}</td>
+              <td>{<button className="btn btn-warning" onClick={() => GetWords.viewWord(word.id)}>View</button>}</td>
+              <td>{<button className="btn btn-secondary" onClick={() => GetWords.updateWord(word.id)}>Edit</button>}</td>
+              <td>{<button className="btn btn-danger" onClick={() => GetWords.deleteWord(word.id)}>Delete</button>}</td>
             </tr>
           )}
         </tbody>
       </table>
     );
+  }
+
+  static updateWord(id) {
+    console.log(id);
+  }
+
+  static viewWord(id) {
+    console.log(id);
+  }
+
+  static deleteWord(id) {
+    console.log(id);
   }
 
   render() {
