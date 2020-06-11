@@ -2,30 +2,36 @@ import React, { Component } from 'react';
 import authHeader from '../services/AuthHeader';
 import { handleResponse } from '../helpers/handleResponse';
 
+
 export class GetWords extends Component {
   static displayName = GetWords.name;
- 
+  static requestOptions = {
+    method: 'GET',
+    headers: {
+      'Authorization': authHeader()
+    }
+  };
 
   constructor(props) {
     super(props);
-    this.state = { error: null, isLoaded: false, words: [] };
+
+    this.state = { error: null, isLoaded: false, words: [], word: {}, viewState: false, updateState: false };
+    
+    this.viewWord = this.viewWord.bind(this);
+    this.updateWord = this.updateWord.bind(this);
+    this.deleteWord = this.deleteWord.bind(this);
   }
   
   componentDidMount() {
-    const requestOptions = {
-      method: 'GET',
-      headers: {
-        'Authorization': authHeader()
-      }
-    };
-  
-    fetch('word/get-words?userId=' + JSON.parse(localStorage.getItem('user-info') || '{}').userId, requestOptions)
+    fetch('word/get-words?userId=' + JSON.parse(localStorage.getItem('user-info') || '{}').userId, GetWords.requestOptions)
       .then(handleResponse)
       .then(
           (result) => {
             this.setState({
               isLoaded: true,
-              words: result
+              words: result,
+              viewState: false,
+              updateState: false
             });
         },
         (error) => {
@@ -37,58 +43,86 @@ export class GetWords extends Component {
       );
   }
 
-  static renderWordsTable(words) {
-    return (
-      <table className='table table-striped' aria-labelledby="tabelLabel">
-        <thead>
-          <tr>
-            <th>Word</th>
-            <th>Meaning</th>
-            <th>Example</th>
-            <th>Operations</th>
-          </tr>
-        </thead>
-        <tbody>
-          {words.map(word =>
+  viewWord(wordId) {
+    fetch('word/get-word/' + wordId, GetWords.requestOptions)
+      .then(handleResponse)
+      .then(
+          (result) => {
+            this.setState({
+              isLoaded: true,
+              word: result,
+              viewState: true
+            });
+        },
+        (error) => {
+            this.setState({
+              isLoaded: true,
+              error
+            });
+        }
+      );
+  }
+
+  updateWord(wordId) {
+    console.log('update word clicked');
+  }
+
+
+  deleteWord(wordId) {
+    console.log('delete word clicked');
+  }
+
+  renderWordsTable(words) {
+      return ( 
+        <table className='table table-striped' aria-labelledby="tabelLabel">
+      <thead>
+        <tr>
+          <th>Word</th>
+          <th>Meaning</th>
+          <th>Example</th>
+          <th>Operations</th>
+        </tr>
+      </thead>
+      <tbody>
+        {words.map(word =>
             <tr key={word.id}>
               <td>{word.vocable}</td>
               <td>{word.meaning}</td>
               <td>{word.sentence}</td>
-              <td>{<button className="btn btn-warning" onClick={() => GetWords.viewWord(word.id)}>View</button>}</td>
-              <td>{<button className="btn btn-secondary" onClick={() => GetWords.updateWord(word.id)}>Edit</button>}</td>
-              <td>{<button className="btn btn-danger" onClick={() => GetWords.deleteWord(word.id)}>Delete</button>}</td>
+              <td>{<button className="btn btn-warning" onClick={this.viewWord.bind(this, word.id)}>View</button>}</td>
+              <td>{<button className="btn btn-secondary" onClick={this.updateWord.bind(this, word.id)}>Edit</button>}</td>
+              <td>{<button className="btn btn-danger" onClick={this.deleteWord.bind(this, word.id)}>Delete</button>}</td>
             </tr>
-          )}
-        </tbody>
-      </table>
-    );
-  }
-
-  static updateWord(id) {
-    console.log(id);
-  }
-
-  static viewWord(id) {
-    console.log(id);
-  }
-
-  static deleteWord(id) {
-    console.log(id);
+        )}
+      </tbody>
+    </table>
+      );
   }
 
   render() {
-    const { error, isLoaded, words } = this.state;  
+    const { error, isLoaded, words, word, viewState, updateState } = this.state;  
 
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else { 
-      return (
-        <div>
-          { GetWords.renderWordsTable(words) }
-        </div>
-      );
+      if (!viewState && !updateState) {
+        return (
+          <div>
+            { this.renderWordsTable(words) }
+          </div>
+        );
+      }  else if (viewState) {
+        return (
+          <div>
+              <p>{word.vocable}</p>
+              <p>{word.meaning}</p>
+              <p>{word.sentence}</p>
+          </div>
+        );
+      }
+      
     }
   }
 }
