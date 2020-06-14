@@ -89,14 +89,14 @@ namespace Self.WebSpaReact.Controllers
         #endregion
 
         #region Delete Word
-        [HttpDelete("delete-word")]
+        [HttpDelete("delete-word/{wordId}")]
         public async Task<IActionResult> DeleteWord(int wordId)
         {
             Word deletedWord = await _wordService.GetWordById(wordId);
 
             await _wordService.DeleteWord(deletedWord);
 
-            return Ok();
+            return Ok("1");
         }
         #endregion
         #endregion

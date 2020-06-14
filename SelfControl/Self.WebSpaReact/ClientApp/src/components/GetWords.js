@@ -13,6 +13,7 @@ export class GetWords extends Component {
     }
   };
 
+
   constructor(props) {
     super(props);
 
@@ -87,10 +88,26 @@ export class GetWords extends Component {
     });
   }
 
-
   deleteWord(wordId) {
-    console.log('delete word clicked');
+    const requestOptions = {
+      method: 'DELETE',
+      headers: {
+        'Authorization': authHeader()
+      }
+    };
+
+    fetch('word/delete-word/' + wordId, requestOptions)
+      .then(handleResponse)
+      .then(
+          (result) => {
+            this.getWords();
+        },
+        (error) => {
+            console.log(error);
+        }
+      );
   }
+ 
 
   renderWordsTable(words) {
       return ( 
