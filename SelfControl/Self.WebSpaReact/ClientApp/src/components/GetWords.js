@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import authHeader from '../services/AuthHeader';
 import { handleResponse } from '../helpers/handleResponse';
+import UpdateWord from './UpdateWord';
 
 
 export class GetWords extends Component {
@@ -17,12 +18,18 @@ export class GetWords extends Component {
 
     this.state = { error: null, isLoaded: false, words: [], word: {}, viewState: false, updateState: false };
     
+    this.getWords = this.getWords.bind(this);
     this.viewWord = this.viewWord.bind(this);
     this.updateWord = this.updateWord.bind(this);
     this.deleteWord = this.deleteWord.bind(this);
+    this.getWord = this.getWord.bind(this);
   }
   
   componentDidMount() {
+    this.getWords();
+  }
+
+  getWords() {
     fetch('word/get-words?userId=' + JSON.parse(localStorage.getItem('user-info') || '{}').userId, GetWords.requestOptions)
       .then(handleResponse)
       .then(
@@ -31,7 +38,8 @@ export class GetWords extends Component {
               isLoaded: true,
               words: result,
               viewState: false,
-              updateState: false
+              updateState: false,
+              wordId: 0
             });
         },
         (error) => {
@@ -44,14 +52,22 @@ export class GetWords extends Component {
   }
 
   viewWord(wordId) {
+    this.getWord(wordId);
+
+    this.setState({
+      viewState: true,
+      updateState: false
+    });
+  }
+
+  getWord(wordId) {
     fetch('word/get-word/' + wordId, GetWords.requestOptions)
       .then(handleResponse)
       .then(
           (result) => {
             this.setState({
               isLoaded: true,
-              word: result,
-              viewState: true
+              word: result
             });
         },
         (error) => {
@@ -64,7 +80,11 @@ export class GetWords extends Component {
   }
 
   updateWord(wordId) {
-    console.log('update word clicked');
+    this.setState({
+      viewState: false,
+      updateState: true,
+      wordId: wordId
+    });
   }
 
 
@@ -100,7 +120,7 @@ export class GetWords extends Component {
   }
 
   render() {
-    const { error, isLoaded, words, word, viewState, updateState } = this.state;  
+    const { error, isLoaded, words, word, wordId, viewState, updateState } = this.state;  
 
     if (error) {
       return <div>Error: {error.message}</div>;
@@ -119,7 +139,12 @@ export class GetWords extends Component {
               <p>{word.vocable}</p>
               <p>{word.meaning}</p>
               <p>{word.sentence}</p>
+              <button className="btn btn-info" onClick={this.getWords}>Back To Words</button>
           </div>
+        );
+      } else if (updateState) {
+        return (
+          <UpdateWord wordId={wordId} handleGetWords={this.getWords}></UpdateWord>
         );
       }
       
