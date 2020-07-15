@@ -85,5 +85,10 @@ namespace Self.Infrastructure.Data
         {
             return await _appDbContext.Set<T>().ToListAsync();
         }
+
+        public async Task<IReadOnlyList<T>> GetListByRange(int startPosition, int itemCount)
+        {
+            return await _appDbContext.Set<T>().Skip(startPosition).Take(itemCount).ToListAsync();
+        }
     }
 }
