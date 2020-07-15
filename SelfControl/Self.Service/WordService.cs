@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Caching.Memory;
 using Self.Core.Entities;
 using Self.Core.Interfaces;
 using Self.Infrastructure.Data;
@@ -11,9 +12,12 @@ namespace Self.Service
     public class WordService : IWordService
     {
         private IUnitOfWork _unitOfWork;
-        public WordService(IUnitOfWork unitOfWork)
+        private IMemoryCache _cache;
+
+        public WordService(IUnitOfWork unitOfWork, IMemoryCache memoryCache)
         {
             this._unitOfWork = unitOfWork as UnitOfWork;
+            _cache = memoryCache;
         }
 
         public async Task<Word> AddWord(Word word)
@@ -44,9 +48,24 @@ namespace Self.Service
             return await _unitOfWork.WordRepository.GetByIdAsync(id);
         }
 
-        public async Task<IReadOnlyList<Word>> GetWords(int userId)
+        public async Task<IReadOnlyList<Word>> GetWords(int userId, int isUpdated)
         {
-            return await _unitOfWork.WordRepository.GetListByUserAsync(userId);
+            IReadOnlyList<Word> words;
+
+            if (!_cache.TryGetValue("_Words", out words) || isUpdated == 1)
+            {
+                words = await _unitOfWork.WordRepository.GetListByUserAsync(userId);
+
+                var cacheEntryOptions = new MemoryCacheEntryOptions()
+                    .SetSlidingExpiration(TimeSpan.FromSeconds(30));
+
+                _cache.Set("_Words", words, cacheEntryOptions);
+            }
+            else
+            {
+                words = _cache.Get<IReadOnlyList<Word>>("_Words");
+            }
+            return words;
         }
 
         public async Task UpdateWord(Word word)

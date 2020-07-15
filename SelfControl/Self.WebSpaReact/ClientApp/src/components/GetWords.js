@@ -17,7 +17,15 @@ export class GetWords extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { error: null, isLoaded: false, words: [], word: {}, viewState: false, updateState: false };
+    this.state = { 
+      error: null,
+      isLoaded: false, 
+      words: [], 
+      word: {}, 
+      viewState: false, 
+      updateState: false, 
+      deleteState: false 
+    };
     
     this.getWords = this.getWords.bind(this);
     this.viewWord = this.viewWord.bind(this);
@@ -31,7 +39,14 @@ export class GetWords extends Component {
   }
 
   getWords() {
-    fetch('word/get-words?userId=' + JSON.parse(localStorage.getItem('user-info') || '{}').userId, GetWords.requestOptions)
+    var requestUrl = 'word/get-words?userId=' + JSON.parse(localStorage.getItem('user-info') || '{}').userId;
+    
+
+    if (this.state.updateState || this.state.deleteState) {
+      requestUrl += '&isUpdated=1'; 
+    }
+    
+    fetch(requestUrl, GetWords.requestOptions)
       .then(handleResponse)
       .then(
           (result) => {
@@ -100,6 +115,10 @@ export class GetWords extends Component {
       .then(handleResponse)
       .then(
           (result) => {
+            this.setState({
+              deleteState: true
+            });
+
             this.getWords();
         },
         (error) => {

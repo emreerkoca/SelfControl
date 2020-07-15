@@ -11,7 +11,7 @@ namespace Self.Service
         Task<Word> AddWord(Word word);
         Task UpdateWord(Word word);
         Task DeleteWord(Word word);
-        Task<IReadOnlyList<Word>> GetWords(int userId);
+        Task<IReadOnlyList<Word>> GetWords(int userId, int isUpdated);
         Task<Word> GetWordById(int id);
         }
 }

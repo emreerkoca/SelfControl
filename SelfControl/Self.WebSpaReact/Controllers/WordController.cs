@@ -55,9 +55,9 @@ namespace Self.WebSpaReact.Controllers
 
         #region Get Word List
         [HttpGet("get-words")]
-        public async Task<IActionResult> GetWords(int userId)
+        public async Task<IActionResult> GetWords(int userId, int isUpdated)
         {
-            IReadOnlyList<Word> wordList = await _wordService.GetWords(userId);
+            IReadOnlyList<Word> wordList = await _wordService.GetWords(userId, isUpdated);
 
             if (wordList == null)
             {
