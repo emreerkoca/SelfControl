@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
 using Self.Core.Entities;
 using Self.Core.Interfaces;
+using Self.Core.Paging;
 using Self.Infrastructure.Data;
 
 namespace Self.Service
@@ -66,6 +67,11 @@ namespace Self.Service
                 words = _cache.Get<IReadOnlyList<Word>>("_Words");
             }
             return words;
+        }
+
+        public async Task<PagedItemList<Word>> GetWordsByRange(int userId, int isUpdated, PagingParameters pagingParameters)
+        {
+            return await _unitOfWork.WordRepository.GetListByRangeAsync(userId, pagingParameters);
         }
 
         public async Task UpdateWord(Word word)

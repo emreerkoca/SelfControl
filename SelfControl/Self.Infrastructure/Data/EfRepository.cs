@@ -29,7 +29,6 @@ namespace Self.Infrastructure.Data
         public async Task<T> AddAsync(T entity)
         {
             await _appDbContext.Set<T>().AddAsync(entity);
-            //await _appDbContext.SaveChangesAsync();
 
             return  entity;
         }
@@ -84,11 +83,6 @@ namespace Self.Infrastructure.Data
         public async Task<IReadOnlyList<T>> GetListAllAsync()
         {
             return await _appDbContext.Set<T>().ToListAsync();
-        }
-
-        public async Task<IReadOnlyList<T>> GetListByRange(int startPosition, int itemCount)
-        {
-            return await _appDbContext.Set<T>().Skip(startPosition).Take(itemCount).ToListAsync();
         }
     }
 }

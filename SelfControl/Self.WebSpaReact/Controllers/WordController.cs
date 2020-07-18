@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Self.Core.Entities;
 using Self.Core.Interfaces;
+using Self.Core.Paging;
 using Self.Service;
 
 namespace Self.WebSpaReact.Controllers
@@ -58,6 +59,19 @@ namespace Self.WebSpaReact.Controllers
         public async Task<IActionResult> GetWords(int userId, int isUpdated)
         {
             IReadOnlyList<Word> wordList = await _wordService.GetWords(userId, isUpdated);
+
+            if (wordList == null)
+            {
+                return BadRequest("Could not get words");
+            }
+
+            return Ok(wordList);
+        }
+
+        [HttpGet("get-words-by-range")]
+        public async Task<IActionResult> GetWordsByRange([FromQuery] PagingParameters pagingParameters, int userId, int isUpdated)
+        {
+            PagedItemList<Word> wordList = await _wordService.GetWordsByRange(userId, isUpdated, pagingParameters);
 
             if (wordList == null)
             {

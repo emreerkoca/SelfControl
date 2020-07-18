@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace Self.Infrastructure.Data.Paging
+namespace Self.Core.Paging
 {
     public class PagedItemList<T> : List<T>
     {
@@ -25,7 +26,7 @@ namespace Self.Infrastructure.Data.Paging
             AddRange(items);
         }
 
-        public static PagedItemList<T> ToPagedItemList(IQueryable<T> source, int pageIndex, int pageItemCount)
+        public async static Task<PagedItemList<T>> ToPagedItemList(IQueryable<T> source, int pageIndex, int pageItemCount)
         {
             var count = source.Count();
             var items = source.Skip((pageIndex - 1) * pageItemCount).Take(pageItemCount).ToList();

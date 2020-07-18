@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using CsvHelper;
+using Self.Core.Paging;
 
 namespace Self.Infrastructure.Data
 {
@@ -30,6 +31,11 @@ namespace Self.Infrastructure.Data
         public async Task<IReadOnlyList<Word>> GetListByUserAsync(int userId)
         {
             return await _appDbContext.Word.Where(x => x.OwnerId == userId).ToListAsync();
+        }
+
+        public async Task<PagedItemList<Word>> GetListByRangeAsync(int userId, PagingParameters pagingParameters)
+        {
+            return await PagedItemList<Word>.ToPagedItemList(_appDbContext.Word.Where(x => x.OwnerId == userId), pagingParameters.PageIndex, pagingParameters.ItemCount);    
         }
 
         //public async Task ExportToFileAsync(string filePath, IReadOnlyList<Word> words)

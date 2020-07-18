@@ -39,8 +39,7 @@ export class GetWords extends Component {
   }
 
   getWords() {
-    var requestUrl = 'word/get-words?userId=' + JSON.parse(localStorage.getItem('user-info') || '{}').userId;
-    
+    var requestUrl = 'word/get-words-by-range?pageIndex=1&itemCount=10&userId=' + JSON.parse(localStorage.getItem('user-info') || '{}').userId;
 
     if (this.state.updateState || this.state.deleteState) {
       requestUrl += '&isUpdated=1'; 

@@ -10,7 +10,6 @@ namespace Self.Core.Interfaces
     {
         ValueTask<T> GetByIdAsync(int id); 
         Task<IReadOnlyList<T>> GetListAllAsync();
-        Task<IReadOnlyList<T>> GetListByRange(int startPosition, int itemCount);
         Task<T> AddAsync(T entity);
         Task<bool> UpdateAsync(T entity);
         Task<bool> DeleteAsync(T entity);
