@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 import authHeader from '../services/AuthHeader';
 import { handleResponse } from '../helpers/handleResponse';
 import UpdateWord from './UpdateWord';
@@ -13,9 +14,12 @@ export class GetWords extends Component {
     }
   };
 
-
   constructor(props) {
     super(props);
+
+    this.currentPage = 1;
+    this.pageSize = 10;
+    this.pagesCount = this.getPageCount();
 
     this.state = { 
       error: null,
@@ -24,7 +28,8 @@ export class GetWords extends Component {
       word: {}, 
       viewState: false, 
       updateState: false, 
-      deleteState: false 
+      deleteState: false,
+      currentPage: 1 
     };
     
     this.getWords = this.getWords.bind(this);
@@ -32,14 +37,19 @@ export class GetWords extends Component {
     this.updateWord = this.updateWord.bind(this);
     this.deleteWord = this.deleteWord.bind(this);
     this.getWord = this.getWord.bind(this);
+    this.handlePaginationClick = this.handlePaginationClick.bind(this);
   }
-  
+
   componentDidMount() {
     this.getWords();
   }
 
+  getPageCount() {
+    return 20;
+  }
+
   getWords() {
-    var requestUrl = 'word/get-words-by-range?pageIndex=1&itemCount=10&userId=' + JSON.parse(localStorage.getItem('user-info') || '{}').userId;
+    var requestUrl = 'word/get-words-by-range?pageIndex=' + this.currentPage + '&itemCount=10&userId=' + JSON.parse(localStorage.getItem('user-info') || '{}').userId;
 
     if (this.state.updateState || this.state.deleteState) {
       requestUrl += '&isUpdated=1'; 
@@ -125,10 +135,17 @@ export class GetWords extends Component {
         }
       );
   }
- 
+
+  handlePaginationClick(e, index) {
+    e.preventDefault();
+
+    this.currentPage = index;
+    this.getWords();
+  }
 
   renderWordsTable(words) {
       return ( 
+        <div>
         <table className='table table-striped' aria-labelledby="tabelLabel">
       <thead>
         <tr>
@@ -151,7 +168,33 @@ export class GetWords extends Component {
         )}
       </tbody>
     </table>
-      );
+    <Pagination>
+            <PaginationItem disabled={this.currentPage <= 0}>
+              <PaginationLink
+                onClick={e => this.handlePaginationClick(e, this.currentPage - 1)}
+                previous
+                href="#"
+              />
+            </PaginationItem>
+
+            {[...Array(this.pagesCount)].map((page, i) => 
+              <PaginationItem active={i === this.currentPage - 1} key={i}>
+                <PaginationLink onClick={e => this.handlePaginationClick(e, i + 1)} href="#">
+                  {i + 1}
+                </PaginationLink>
+              </PaginationItem>
+            )}
+
+            <PaginationItem disabled={this.currentPage >= this.pagesCount - 1}>
+              <PaginationLink
+                onClick={e => this.handlePaginationClick(e, this.currentPage + 1)}
+                next
+                href="#"
+              />
+            </PaginationItem>
+          </Pagination>
+    </div>
+    );
   }
 
   render() {
