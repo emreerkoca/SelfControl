@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Self.Core.DTOs;
 using Self.Core.Entities;
 using Self.Core.Interfaces;
 using Self.Core.Paging;
@@ -69,16 +70,16 @@ namespace Self.WebSpaReact.Controllers
         }
 
         [HttpGet("get-words-by-range")]
-        public async Task<IActionResult> GetWordsByRange([FromQuery] PagingParameters pagingParameters, int userId, int isUpdated)
+        public IActionResult GetWordsByRange([FromQuery] PagingParameters pagingParameters, int userId, int isUpdated)
         {
-            PagedItemList<Word> wordList = await _wordService.GetWordsByRange(userId, isUpdated, pagingParameters);
+            ItemListDTO<Word> wordListDTO = _wordService.GetWordsByRange(userId, isUpdated, pagingParameters);
 
-            if (wordList == null)
+            if (wordListDTO == null)
             {
                 return BadRequest("Could not get words");
             }
 
-            return Ok(wordList);
+            return Ok(wordListDTO);
         }
         #endregion
 

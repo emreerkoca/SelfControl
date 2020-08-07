@@ -1,4 +1,5 @@
-﻿using Self.Core.Entities;
+﻿using Self.Core.DTOs;
+using Self.Core.Entities;
 using Self.Core.Paging;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace Self.Core.Interfaces
         Word GetRandomWord();
         Task<Word> GetRandomWordAsync();
         Task<IReadOnlyList<Word>> GetListByUserAsync(int userId);
-        Task<PagedItemList<Word>> GetListByRangeAsync(int userId, PagingParameters pagingParameters);
+        ItemListDTO<Word> GetListByRange(int userId, PagingParameters pagingParameters);
 
         //Task ExportToFileAsync(string filePath, IReadOnlyList<Word> words);
     }

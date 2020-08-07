@@ -19,7 +19,6 @@ export class GetWords extends Component {
 
     this.currentPage = 1;
     this.pageSize = 10;
-    this.pagesCount = this.getPageCount();
 
     this.state = { 
       error: null,
@@ -29,7 +28,7 @@ export class GetWords extends Component {
       viewState: false, 
       updateState: false, 
       deleteState: false,
-      currentPage: 1 
+      pageCount: 1
     };
     
     this.getWords = this.getWords.bind(this);
@@ -44,10 +43,6 @@ export class GetWords extends Component {
     this.getWords();
   }
 
-  getPageCount() {
-    return 20;
-  }
-
   getWords() {
     var requestUrl = 'word/get-words-by-range?pageIndex=' + this.currentPage + '&itemCount=10&userId=' + JSON.parse(localStorage.getItem('user-info') || '{}').userId;
 
@@ -59,12 +54,16 @@ export class GetWords extends Component {
       .then(handleResponse)
       .then(
           (result) => {
+            console.log("RESULT");
+            console.log(result);
+
             this.setState({
               isLoaded: true,
-              words: result,
+              words: result.itemList,
               viewState: false,
               updateState: false,
-              wordId: 0
+              wordId: 0,
+              pageCount: result.pageCount
             });
         },
         (error) => {
@@ -177,7 +176,7 @@ export class GetWords extends Component {
               />
             </PaginationItem>
 
-            {[...Array(this.pagesCount)].map((page, i) => 
+            {[...Array(this.state.pageCount)].map((page, i) => 
               <PaginationItem active={i === this.currentPage - 1} key={i}>
                 <PaginationLink onClick={e => this.handlePaginationClick(e, i + 1)} href="#">
                   {i + 1}
@@ -185,7 +184,7 @@ export class GetWords extends Component {
               </PaginationItem>
             )}
 
-            <PaginationItem disabled={this.currentPage >= this.pagesCount - 1}>
+            <PaginationItem disabled={this.currentPage >= this.state.pageCount - 1}>
               <PaginationLink
                 onClick={e => this.handlePaginationClick(e, this.currentPage + 1)}
                 next

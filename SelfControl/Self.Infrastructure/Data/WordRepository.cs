@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.IO;
 using CsvHelper;
 using Self.Core.Paging;
+using Self.Core.DTOs;
 
 namespace Self.Infrastructure.Data
 {
@@ -33,9 +34,11 @@ namespace Self.Infrastructure.Data
             return await _appDbContext.Word.Where(x => x.OwnerId == userId).ToListAsync();
         }
 
-        public async Task<PagedItemList<Word>> GetListByRangeAsync(int userId, PagingParameters pagingParameters)
+        public ItemListDTO<Word> GetListByRange(int userId, PagingParameters pagingParameters)
         {
-            return await PagedItemList<Word>.ToPagedItemList(_appDbContext.Word.Where(x => x.OwnerId == userId), pagingParameters.PageIndex, pagingParameters.ItemCount);    
+            return PagedItemList<Word>.ToPagedItemList(_appDbContext.Word
+                .Where(x => x.OwnerId == userId), pagingParameters.PageIndex, pagingParameters.ItemCount);
+
         }
 
         //public async Task ExportToFileAsync(string filePath, IReadOnlyList<Word> words)

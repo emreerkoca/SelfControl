@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
+using Self.Core.DTOs;
 using Self.Core.Entities;
 using Self.Core.Interfaces;
 using Self.Core.Paging;
@@ -69,9 +70,9 @@ namespace Self.Service
             return words;
         }
 
-        public async Task<PagedItemList<Word>> GetWordsByRange(int userId, int isUpdated, PagingParameters pagingParameters)
+        public ItemListDTO<Word> GetWordsByRange(int userId, int isUpdated, PagingParameters pagingParameters)
         {
-            return await _unitOfWork.WordRepository.GetListByRangeAsync(userId, pagingParameters);
+            return _unitOfWork.WordRepository.GetListByRange(userId, pagingParameters);
         }
 
         public async Task UpdateWord(Word word)

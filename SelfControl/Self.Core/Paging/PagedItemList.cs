@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Self.Core.DTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,12 +27,17 @@ namespace Self.Core.Paging
             AddRange(items);
         }
 
-        public async static Task<PagedItemList<T>> ToPagedItemList(IQueryable<T> source, int pageIndex, int pageItemCount)
+        public static ItemListDTO<T> ToPagedItemList(IQueryable<T> source, int pageIndex, int pageItemCount)
         {
+            ItemListDTO<T> itemListDto = new ItemListDTO<T>();
+
             var count = source.Count();
             var items = source.Skip((pageIndex - 1) * pageItemCount).Take(pageItemCount).ToList();
 
-            return new PagedItemList<T>(items, count, pageIndex, pageItemCount);
+            itemListDto.ItemList = new PagedItemList<T>(items, count, pageIndex, pageItemCount);
+            itemListDto.PageCount = count / pageItemCount;
+
+            return itemListDto;
         }
     }
 }
