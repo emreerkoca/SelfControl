@@ -10,6 +10,7 @@ using Self.Core.Entities;
 using Self.Core.Interfaces;
 using Self.Core.Paging;
 using Self.Service;
+using Self.WebSpaReact.Exceptions;
 
 namespace Self.WebSpaReact.Controllers
 {
@@ -19,24 +20,36 @@ namespace Self.WebSpaReact.Controllers
     public class WordController : ControllerBase
     {
         #region Fields
+        private readonly ILogger<WordController> _logger;
         IWordService _wordService;
         #endregion
 
         #region CTOR
-        public WordController(IWordService wordService)
+        public WordController(IWordService wordService, ILogger<WordController> logger)
         {
             _wordService = wordService;
+            _logger = logger;
+
+            _logger.LogDebug(1, "NLog injected to WordController");
         }
         #endregion
 
         #region Actions
         #region GetWord
+        [AllowAnonymous]
         [HttpGet("get-word/{wordId}")]
         public async Task<IActionResult> GetWordById(int wordId)
         {
             Word word = await _wordService.GetWordById(wordId);
 
-            return Ok(word);
+            if (word == null)
+            {
+                throw new NotFoundException($"Word with Id {wordId} not found!");
+            }
+
+            _logger.LogInformation("GetWord ok!");
+
+            return new OkObjectResult(word);
         }
         #endregion
 
@@ -44,11 +57,16 @@ namespace Self.WebSpaReact.Controllers
         [HttpPost("add-word")]
         public async Task<IActionResult> AddWord([FromBody] Word newWord)
         {
-            var result = _wordService.AddWord(newWord);
+            if (!ModelState.IsValid)
+            {
+                throw new BadRequestException("Your data is not valid");
+            }
+
+            var result = await _wordService.AddWord(newWord);
 
             if (result == null)
             {
-                return BadRequest("Could not add!");
+                throw new Exception("Could not add word!");
             }
 
             return Ok(newWord);
@@ -63,7 +81,7 @@ namespace Self.WebSpaReact.Controllers
 
             if (wordList == null)
             {
-                return BadRequest("Could not get words");
+                throw new NotFoundException("Could not get words");
             }
 
             return Ok(wordList);
@@ -76,7 +94,7 @@ namespace Self.WebSpaReact.Controllers
 
             if (wordListDTO == null)
             {
-                return BadRequest("Could not get words");
+                throw new Exception("Could not get words");
             }
 
             return Ok(wordListDTO);
@@ -89,15 +107,15 @@ namespace Self.WebSpaReact.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                throw new BadRequestException("Your data is not valid");
             }
 
             if (wordId != updatedWord.Id)
             {
-                return BadRequest();
+                throw new Exception("Something went wrong! We' re working on it!");
             }
 
-            _wordService.UpdateWord(updatedWord);
+            await _wordService.UpdateWord(updatedWord);
 
             return Ok(updatedWord);
         }
@@ -108,6 +126,11 @@ namespace Self.WebSpaReact.Controllers
         public async Task<IActionResult> DeleteWord(int wordId)
         {
             Word deletedWord = await _wordService.GetWordById(wordId);
+
+            if (deletedWord == null)
+            {
+                throw new NotFoundException("Could not find word. You can check your words again!");
+            }
 
             await _wordService.DeleteWord(deletedWord);
 
